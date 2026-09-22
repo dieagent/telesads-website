@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ParticleField from "./Canvas";
 import { links } from "@/lib/content";
 
@@ -22,27 +22,8 @@ const LINES = [
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
-  const wrap = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => setMounted(true), []);
-
-  /* scroll-linked depth: headline recedes into Z as you leave */
-  useEffect(() => {
-    const el = wrap.current;
-    if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    let raf = 0;
-    const calc = () => {
-      raf = 0;
-      const p = Math.max(0, Math.min(1, window.scrollY / window.innerHeight));
-      el.style.transform = `translate3d(0, ${p * 70}px, 0) scale(${1 - p * 0.07})`;
-      el.style.opacity = `${1 - p * 1.15}`;
-    };
-    const s = () => { if (!raf) raf = requestAnimationFrame(calc); };
-    calc();
-    window.addEventListener("scroll", s, { passive: true });
-    return () => { window.removeEventListener("scroll", s); cancelAnimationFrame(raf); };
-  }, []);
 
   let idx = 0;
 
@@ -70,11 +51,7 @@ export default function Hero() {
         />
       </div>
 
-      <div
-        ref={wrap}
-        className="pointer-events-none relative mx-auto flex w-full max-w-[1400px] flex-1 flex-col justify-center px-6 pb-24 pt-32 lg:px-10"
-        style={{ willChange: "transform, opacity" }}
-      >
+      <div className="pointer-events-none relative mx-auto flex w-full max-w-[1400px] flex-1 flex-col justify-center px-6 pb-24 pt-32 lg:px-10">
         <p
           className="label mb-9 flex items-center gap-3"
           style={{
@@ -90,11 +67,10 @@ export default function Hero() {
         {/* 3D word-by-word entrance */}
         <h1
           className="display text-[clamp(2.9rem,9.6vw,9rem)]"
-          style={{ perspective: "1000px" }}
-          aria-label="Your gateway to Telegram growth"
+                    aria-label="Your gateway to Telegram growth"
         >
           {LINES.map((line, li) => (
-            <span key={li} className="block" style={{ transformStyle: "preserve-3d" }}>
+            <span key={li} className="block">
               {line.map((word) => {
                 const i = idx++;
                 const isBrand = word === "Telegram";
@@ -105,10 +81,8 @@ export default function Hero() {
                     className={`inline-block ${isBrand ? "serif text-accent" : ""}`}
                     style={{
                       opacity: mounted ? 1 : 0,
-                      transform: mounted
-                        ? "none"
-                        : "translateY(0.5em) translateZ(-90px) rotateX(-42deg)",
-                      transition: `opacity 900ms var(--ease-out) ${120 + i * 95}ms, transform 1000ms var(--ease-out) ${120 + i * 95}ms`,
+                      transform: mounted ? "none" : "translateY(0.32em)",
+                      transition: `opacity 700ms var(--ease-out) ${100 + i * 70}ms, transform 780ms var(--ease-out) ${100 + i * 70}ms`,
                     }}
                   >
                     {word}
@@ -153,18 +127,6 @@ export default function Hero() {
             </a>
           </div>
         </div>
-      </div>
-
-      {/* scroll cue */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-20 left-1/2 hidden -translate-x-1/2 lg:block"
-        style={{
-          opacity: mounted ? 1 : 0,
-          transition: "opacity 900ms var(--ease-out) 1200ms",
-        }}
-      >
-        <span className="scroll-cue block h-10 w-px bg-gradient-to-b from-accent to-transparent" />
       </div>
 
       <div className="relative overflow-hidden border-t border-line py-3.5">

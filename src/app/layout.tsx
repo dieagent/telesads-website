@@ -5,7 +5,6 @@ import { brand, links } from "@/lib/content";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { ScrollProgress } from "@/components/Visuals";
-import Cursor from "@/components/Cursor";
 
 const sans = Inter({ variable: "--font-sans", subsets: ["latin"], display: "swap" });
 const mono = JetBrains_Mono({ variable: "--font-mono", subsets: ["latin"], display: "swap" });
@@ -91,8 +90,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           Skip to Content
         </a>
-        <div aria-hidden="true" className="grain" />
-        <Cursor />
         <ScrollProgress />
         <Nav />
         <main id="main" className="page-in">{children}</main>

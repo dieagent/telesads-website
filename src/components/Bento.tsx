@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowUpRight, Bot, Globe2, LineChart, Megaphone, Sparkles, Target } from "lucide-react";
-import { BorderBeam, MagicCard, Meteors, NumberTicker, BlurFade } from "./ui/effects";
+import { NumberTicker, BlurFade } from "./ui/effects";
 import { GrowthChart, FunnelViz } from "./Visuals";
 
 /**
@@ -25,8 +25,7 @@ export default function Bento() {
         <div className="mt-16 grid auto-rows-[minmax(190px,auto)] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {/* ── hero cell: Telegram advertising ── */}
           <BlurFade className="sm:col-span-2 lg:col-span-2 lg:row-span-2" delay={0.05}>
-            <MagicCard className="bento-cell h-full">
-              <Meteors number={10} />
+            <div className="bento-cell h-full">
               <div className="relative flex h-full flex-col p-8">
                 <div className="flex items-center gap-2.5">
                   <Megaphone className="size-4 text-accent" aria-hidden="true" />
@@ -45,13 +44,12 @@ export default function Bento() {
                   <GrowthChart />
                 </div>
               </div>
-              <BorderBeam duration={10} />
-            </MagicCard>
+            </div>
           </BlurFade>
 
           {/* ── funnel instrumentation ── */}
           <BlurFade className="sm:col-span-2 lg:row-span-2" delay={0.1}>
-            <MagicCard className="bento-cell h-full">
+            <div className="bento-cell h-full">
               <div className="flex h-full flex-col p-8">
                 <div className="flex items-center gap-2.5">
                   <Target className="size-4 text-accent" aria-hidden="true" />
@@ -67,7 +65,7 @@ export default function Bento() {
                   <FunnelViz />
                 </div>
               </div>
-            </MagicCard>
+            </div>
           </BlurFade>
 
           {/* ── stat: disciplines ── */}
@@ -102,7 +100,7 @@ export default function Bento() {
 
           {/* ── TELES Agent ── */}
           <BlurFade className="sm:col-span-2" delay={0.25}>
-            <MagicCard className="bento-cell h-full">
+            <div className="bento-cell h-full">
               <Link href="/agent" className="flex h-full flex-col p-7">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2.5">
@@ -127,8 +125,7 @@ export default function Bento() {
                   ))}
                 </div>
               </Link>
-              <BorderBeam duration={13} delay={3} />
-            </MagicCard>
+            </div>
           </BlurFade>
 
           {/* ── stat: metrics ── */}

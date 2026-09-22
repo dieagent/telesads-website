@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Reveal } from "./Reveal";
-import { Spotlight } from "./ui/spotlight";
 
 /** Shared oversized page masthead used by every inner route. */
 export function PageHead({
@@ -19,7 +18,6 @@ export function PageHead({
 }) {
   return (
     <header className="page-in relative overflow-hidden px-6 pb-16 pt-36 lg:px-10 lg:pb-24 lg:pt-44">
-      <Spotlight />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -28,11 +26,6 @@ export function PageHead({
             "linear-gradient(to right, rgba(245,245,243,0.045) 1px, transparent 1px)",
           backgroundSize: "calc(100% / 6) 100%",
         }}
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-40 right-[-8%] size-[560px] rounded-full opacity-[0.13] blur-[140px]"
-        style={{ background: "var(--accent)" }}
       />
       <div className="relative mx-auto max-w-[1400px]">
         <p className="label flex items-center gap-3">

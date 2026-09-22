@@ -3,9 +3,9 @@
 import Link from "next/link";
 import Globe from "./Globe";
 import { Reveal } from "./Reveal";
-import { TiltCard, Parallax, SplitText } from "./Depth";
+import { Parallax } from "./Depth";
 import { ArrowUpRight } from "lucide-react";
-import { MagicCard, NumberTicker } from "./ui/effects";
+import { NumberTicker } from "./ui/effects";
 import { services, audiences } from "@/lib/content";
 
 /* ==================================================== GLOBAL REACH (3D) */
@@ -27,11 +27,9 @@ export function Reach() {
               </p>
             </Reveal>
             <h2 className="display mt-7 text-[clamp(2.2rem,5.4vw,4.2rem)]">
-              <SplitText text="Audiences" />
+              Audiences
               <br />
-              <span className="serif text-accent">
-                <SplitText text="without borders" delay={180} />
-              </span>
+              <span className="serif text-accent">without borders</span>
             </h2>
             <Reveal delay={120}>
               <p className="mt-7 max-w-[42ch] text-[15px] leading-[1.65] text-muted">
@@ -99,7 +97,7 @@ export function ServiceList() {
         <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => (
             <Reveal key={s.id} delay={(i % 3) * 60}>
-              <MagicCard className="bento-cell h-full">
+              <div className="bento-cell h-full">
                 <Link href={`/services#${s.id}`} className="flex h-full flex-col p-7">
                   <div className="flex items-baseline justify-between">
                     <span className="label tnum">{String(i + 1).padStart(2, "0")}</span>
@@ -120,7 +118,7 @@ export function ServiceList() {
                     ))}
                   </ul>
                 </Link>
-              </MagicCard>
+              </div>
             </Reveal>
           ))}
 
@@ -178,8 +176,7 @@ export function SectorMosaic() {
         <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {audiences.map((a, i) => (
             <Reveal key={a.title} delay={(i % 3) * 70}>
-              <TiltCard strength={7}>
-                <article className="tilt-inner h-full rounded-2xl border border-line bg-[#0c0c0d] p-7 transition-colors duration-300 hover:border-accent/25">
+                <article className="h-full rounded-2xl border border-line bg-[#0c0c0d] p-7 transition-colors duration-300 hover:border-ink/20">
                   <div className="flex items-baseline gap-3">
                     <span className="label tnum text-accent">
                       {String(i + 1).padStart(2, "0")}
@@ -196,7 +193,6 @@ export function SectorMosaic() {
                     </p>
                   ) : null}
                 </article>
-              </TiltCard>
             </Reveal>
           ))}
         </div>

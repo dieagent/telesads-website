@@ -4,33 +4,9 @@ import { Statement } from "@/components/Sections";
 import { Reveal } from "@/components/Reveal";
 import { NextStep } from "@/components/Page";
 import { portfolio } from "@/lib/content";
-import { ScrollSkew } from "@/components/Visuals";
-import { Reach, ServiceList, SectorMosaic, BigQuote } from "@/components/NewSections";
+import { Reach, ServiceList, SectorMosaic } from "@/components/NewSections";
 import Bento from "@/components/Bento";
 import Faq from "@/components/Faq";
-
-/** Scroll-driven oversized marquee. */
-function SkewBand() {
-  return (
-    <section className="overflow-hidden border-y border-line py-10 lg:py-16">
-      <ScrollSkew>
-        <p
-          className="display whitespace-nowrap text-[clamp(3rem,11vw,10rem)] leading-none"
-          aria-hidden="true"
-        >
-          <span className="stroke-txt">Targeted</span>{" "}
-          <span className="text-accent">·</span>{" "}
-          Measured{" "}
-          <span className="text-accent">·</span>{" "}
-          <span className="stroke-txt">Optimized</span>{" "}
-          <span className="text-accent">·</span>{" "}
-          Reported
-        </p>
-      </ScrollSkew>
-      <p className="sr-only">Targeted, measured, optimized, reported.</p>
-    </section>
-  );
-}
 
 function WorkTeaser() {
   return (
@@ -82,9 +58,7 @@ export default function Home() {
       <Statement />
       <Bento />
       <ServiceList />
-      <SkewBand />
       <Reach />
-      <BigQuote />
       <SectorMosaic />
       <WorkTeaser />
       <Faq />
