@@ -35,15 +35,15 @@ export default function AboutPage() {
         ]}
       />
 
-      <section className="noise relative bg-paper px-6 py-24 text-bg lg:px-10 lg:py-32">
+      <section className="band noise px-6 py-24 lg:px-10 lg:py-32">
         <div className="mx-auto max-w-[1400px]">
           <Reveal>
-            <p className="label" style={{ color: "rgba(8,8,8,0.42)" }}>Positioning</p>
+            <p className="label" >Positioning</p>
             <h2 className="display mt-8 max-w-[18ch] text-[clamp(1.9rem,5vw,4.2rem)]">
               A specialized Telegram growth partner — not a generic social media agency.
             </h2>
           </Reveal>
-          <div className="mt-16 grid gap-x-12 gap-y-10 border-t pt-10 sm:grid-cols-2 lg:grid-cols-4" style={{ borderColor: "rgba(8,8,8,0.13)" }}>
+          <div className="mt-16 grid gap-x-12 gap-y-10 border-t pt-10 sm:grid-cols-2 lg:grid-cols-4" style={{ borderColor: "var(--line)" }}>
             {[
               ["Core promise", "Help online businesses and communities acquire relevant audiences, improve visibility and scale through strategic advertising and automation."],
               ["Where we operate", "India and UAE representation, with an international client focus across Telegram-native markets."],
@@ -52,7 +52,7 @@ export default function AboutPage() {
             ].map(([h, b], i) => (
               <Reveal key={h} delay={i * 60}>
                 <h3 className="text-[15px] font-medium">{h}</h3>
-                <p className="mt-2.5 text-[14px] leading-[1.62]" style={{ color: "rgba(8,8,8,0.58)" }}>{b}</p>
+                <p className="mt-2.5 text-[14px] leading-[1.62]" style={{ color: "var(--muted)" }}>{b}</p>
               </Reveal>
             ))}
           </div>

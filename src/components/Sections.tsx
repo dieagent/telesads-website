@@ -5,12 +5,12 @@ import { audiences } from "@/lib/content";
 
 export function Statement() {
   return (
-    <section className="noise relative bg-paper px-6 py-28 text-bg lg:px-10 lg:py-40">
+    <section className="band noise px-6 py-28 lg:px-10 lg:py-40">
       <div className="mx-auto max-w-[1400px]">
         <Reveal>
           <p
             className="label"
-            style={{ color: "rgba(8,8,8,0.42)" }}
+            
           >
             What we do
           </p>
@@ -25,7 +25,7 @@ export function Statement() {
             </>,
           ]}
         />
-        <div className="mt-16 grid gap-10 border-t pt-10 sm:grid-cols-2 lg:grid-cols-4" style={{ borderColor: "rgba(8,8,8,0.12)" }}>
+        <div className="mt-16 grid gap-10 border-t pt-10 sm:grid-cols-2 lg:grid-cols-4" style={{ borderColor: "var(--line)" }}>
           {[
             ["Specialists, not generalists", "Telegram is the core discipline — not a line item bolted onto a social media retainer."],
             ["Research before spend", "Channel discovery, audience and competitor research decide placement. Nothing runs on a guess."],
@@ -34,7 +34,7 @@ export function Statement() {
           ].map(([h, b], i) => (
             <Reveal key={h} delay={i * 70}>
               <h3 className="text-[15px] font-medium tracking-[-0.01em]">{h}</h3>
-              <p className="mt-2.5 text-[14px] leading-[1.6]" style={{ color: "rgba(8,8,8,0.55)" }}>
+              <p className="mt-2.5 text-[14px] leading-[1.6]" style={{ color: "var(--muted)" }}>
                 {b}
               </p>
             </Reveal>

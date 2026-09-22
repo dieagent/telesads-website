@@ -48,16 +48,16 @@ export default function SectorsPage() {
         </div>
       </section>
 
-      <section className="noise relative mt-28 bg-paper px-6 py-24 text-bg lg:mt-36 lg:px-10 lg:py-32">
+      <section className="band noise mt-28 px-6 py-24 lg:mt-36 lg:px-10 lg:py-32">
         <div className="mx-auto grid max-w-[1400px] gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-24">
           <Reveal>
-            <p className="label" style={{ color: "rgba(8,8,8,0.42)" }}>Qualification</p>
+            <p className="label" >Qualification</p>
             <h2 className="display mt-7 text-[clamp(2rem,4.8vw,3.8rem)]">
               Eight questions
               <br />
-              before a <span className="serif" style={{ color: "var(--accent)" }}>quote</span>.
+              before a <span className="serif text-accent">quote</span>.
             </h2>
-            <p className="mt-7 max-w-[40ch] text-[15px] leading-[1.68]" style={{ color: "rgba(8,8,8,0.6)" }}>
+            <p className="mt-7 max-w-[40ch] text-[15px] leading-[1.68]" style={{ color: "var(--muted)" }}>
               We don&rsquo;t price a campaign we don&rsquo;t understand. Every prospect answers
               these before we recommend scope, platform or budget.
             </p>
@@ -68,9 +68,9 @@ export default function SectorsPage() {
                 <li
                   key={q}
                   className="flex items-baseline gap-5 border-t py-4"
-                  style={{ borderColor: "rgba(8,8,8,0.13)" }}
+                  style={{ borderColor: "var(--line)" }}
                 >
-                  <span className="label tnum" style={{ color: "var(--accent)" }}>
+                  <span className="label tnum text-accent">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="text-[15px] leading-[1.5]">{q}</span>
