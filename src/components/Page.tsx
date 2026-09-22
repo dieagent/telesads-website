@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Reveal } from "./Reveal";
+import { Spotlight } from "./ui/spotlight";
 
 /** Shared oversized page masthead used by every inner route. */
 export function PageHead({
@@ -18,6 +19,7 @@ export function PageHead({
 }) {
   return (
     <header className="page-in relative overflow-hidden px-6 pb-16 pt-36 lg:px-10 lg:pb-24 lg:pt-44">
+      <Spotlight />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"

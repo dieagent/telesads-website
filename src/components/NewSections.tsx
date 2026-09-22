@@ -3,8 +3,9 @@
 import Link from "next/link";
 import Globe from "./Globe";
 import { Reveal } from "./Reveal";
-import { TiltCard, Parallax, SplitText, PinnedTrack } from "./Depth";
-import { Stat } from "./Visuals";
+import { TiltCard, Parallax, SplitText } from "./Depth";
+import { ArrowUpRight } from "lucide-react";
+import { MagicCard, NumberTicker } from "./ui/effects";
 import { services, audiences } from "@/lib/content";
 
 /* ==================================================== GLOBAL REACH (3D) */
@@ -45,9 +46,18 @@ export function Reach() {
             </Reveal>
 
             <div className="mt-12 grid grid-cols-3 gap-6 border-t border-line pt-8">
-              <Stat to={24} suffix="/7" label="Automation runs continuously" />
-              <Stat to={9} label="Sectors served" />
-              <Stat to={7} label="Disciplines" />
+              {[
+                { v: 24, s: "/7", l: "Automation runs continuously" },
+                { v: 9, s: "", l: "Sectors served" },
+                { v: 7, s: "", l: "Disciplines" },
+              ].map((x) => (
+                <div key={x.l}>
+                  <p className="text-[clamp(1.9rem,3.4vw,2.8rem)] font-medium leading-none tracking-[-0.04em]">
+                    <NumberTicker value={x.v} suffix={x.s} />
+                  </p>
+                  <p className="mt-2.5 max-w-[18ch] text-[12.5px] leading-[1.45] text-muted">{x.l}</p>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -60,68 +70,81 @@ export function Reach() {
   );
 }
 
-/* ======================================= HORIZONTAL PINNED SERVICE TRACK */
+/* ============================================= SERVICE LIST (magic cards) */
 
-export function ServiceTrack() {
+export function ServiceList() {
   return (
-    <section className="relative border-y border-line">
-      <div className="pointer-events-none absolute left-0 top-0 z-10 px-6 pt-14 lg:px-10">
-        <p className="label">
-          <span className="text-accent">03</span> &nbsp;/&nbsp; Services &nbsp;—&nbsp; scroll
-        </p>
-      </div>
+    <section className="relative px-6 py-28 lg:px-10 lg:py-36">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-end">
+          <Reveal>
+            <p className="label">
+              <span className="text-accent">03</span> &nbsp;/&nbsp; Services
+            </p>
+            <h2 className="display mt-7 text-[clamp(2.2rem,5.4vw,4.2rem)]">
+              Seven disciplines,
+              <br />
+              one <span className="serif text-accent">objective</span>.
+            </h2>
+          </Reveal>
+          <Reveal delay={90}>
+            <p className="max-w-[44ch] text-[15px] leading-[1.65] text-muted lg:pb-3">
+              Telegram advertising is the specialization. Everything else feeds it — the creative
+              that earns the click, the traffic that fills the funnel, the automation that holds
+              the community once it arrives.
+            </p>
+          </Reveal>
+        </div>
 
-      <PinnedTrack>
-        {services.map((s, i) => (
-          <TiltCard key={s.id} className="track-card">
-            <Link href={`/services#${s.id}`} className="block h-full">
-              <div className="tilt-inner flex h-[440px] flex-col rounded-2xl border border-line bg-[#0c0c0d] p-8 transition-colors duration-300 hover:border-accent/30">
-                <div className="flex items-baseline justify-between">
-                  <span className="label tnum">{String(i + 1).padStart(2, "0")}</span>
-                  <span
-                    className="stroke-txt text-[56px] font-medium leading-none"
-                    aria-hidden="true"
-                  >
-                    {s.label}
-                  </span>
-                </div>
-                <h3 className="mt-6 text-[26px] font-medium leading-[1.06] tracking-[-0.03em]">
-                  {s.title}
-                </h3>
-                <p className="mt-4 text-[14px] leading-[1.6] text-muted">{s.summary}</p>
-                <ul className="mt-auto space-y-1.5 border-t border-line pt-5">
-                  {s.points.slice(0, 4).map((p) => (
-                    <li key={p} className="flex gap-2.5 text-[12.5px] text-dim">
-                      <span className="text-accent" aria-hidden="true">·</span>
-                      <span className="min-w-0">{p}</span>
-                    </li>
-                  ))}
-                </ul>
+        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((s, i) => (
+            <Reveal key={s.id} delay={(i % 3) * 60}>
+              <MagicCard className="bento-cell h-full">
+                <Link href={`/services#${s.id}`} className="flex h-full flex-col p-7">
+                  <div className="flex items-baseline justify-between">
+                    <span className="label tnum">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="stroke-txt text-[42px] font-medium leading-none" aria-hidden="true">
+                      {s.label}
+                    </span>
+                  </div>
+                  <h3 className="mt-5 text-[20px] font-medium leading-[1.1] tracking-[-0.025em]">
+                    {s.title}
+                  </h3>
+                  <p className="mt-3 text-[13.5px] leading-[1.6] text-muted">{s.summary}</p>
+                  <ul className="mt-auto space-y-1.5 border-t border-line pt-5">
+                    {s.points.slice(0, 3).map((p) => (
+                      <li key={p} className="flex gap-2.5 text-[12.5px] text-dim">
+                        <span className="text-accent" aria-hidden="true">·</span>
+                        <span className="min-w-0">{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </Link>
+              </MagicCard>
+            </Reveal>
+          ))}
+
+          <Reveal delay={120}>
+            <Link
+              href="/services"
+              className="flex h-full min-h-[240px] flex-col justify-between rounded-[20px] border border-accent/30 bg-accent/[0.06] p-7 transition-colors duration-300 hover:bg-accent/[0.1]"
+            >
+              <span className="label text-accent">All seven</span>
+              <div>
+                <p className="display text-[28px] leading-[1.06]">
+                  See every
+                  <br />
+                  discipline
+                </p>
+                <span className="mt-5 inline-flex items-center gap-2 text-[14px] font-medium">
+                  Open services
+                  <ArrowUpRight className="size-4 text-accent" aria-hidden="true" />
+                </span>
               </div>
             </Link>
-          </TiltCard>
-        ))}
-
-        <div className="track-card flex h-[440px] items-center">
-          <Link
-            href="/services"
-            className="group flex size-full flex-col justify-between rounded-2xl border border-accent/30 bg-accent/[0.06] p-8"
-          >
-            <span className="label text-accent">All seven</span>
-            <div>
-              <p className="display text-[34px] leading-[1.05]">
-                See every
-                <br />
-                discipline
-              </p>
-              <span className="mt-6 inline-flex items-center gap-2 text-[14px] font-medium">
-                Open services
-                <span className="idx-arrow text-accent" aria-hidden="true">→</span>
-              </span>
-            </div>
-          </Link>
+          </Reveal>
         </div>
-      </PinnedTrack>
+      </div>
     </section>
   );
 }

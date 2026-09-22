@@ -363,3 +363,70 @@ p {
 @media (prefers-reduced-motion: reduce) {
   .scroll-cue { animation: none; }
 }
+
+/* ---------- Magic UI adapted keyframes ---------- */
+@keyframes beamRun {
+  to { offset-distance: 100%; }
+}
+.beam-run {
+  offset-distance: 0%;
+  animation-name: beamRun;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes shineSweep {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+.shiny {
+  background: linear-gradient(110deg, var(--muted) 40%, #fff 50%, var(--muted) 60%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shineSweep 5s linear infinite;
+}
+
+@keyframes meteorFall {
+  0%   { transform: translate3d(0,-10%,0) rotate(215deg); opacity: 0; }
+  10%  { opacity: 1; }
+  100% { transform: translate3d(-380px, 780px, 0) rotate(215deg); opacity: 0; }
+}
+.meteor {
+  animation-name: meteorFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.meteor::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 62px;
+  height: 1px;
+  background: linear-gradient(90deg, #ff5c00, transparent);
+}
+
+/* ---------- bento ---------- */
+.bento-cell {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #0c0c0d;
+  transition: border-color 320ms var(--ease-out), transform 320ms var(--ease-out);
+}
+.bento-cell:hover { border-color: rgba(255,92,0,0.3); }
+
+/* ---------- accordion (Radix) ---------- */
+@keyframes accOpen  { from { height: 0 } to { height: var(--radix-accordion-content-height) } }
+@keyframes accClose { from { height: var(--radix-accordion-content-height) } to { height: 0 } }
+.acc-content[data-state="open"]   { animation: accOpen 260ms var(--ease-out); }
+.acc-content[data-state="closed"] { animation: accClose 220ms var(--ease-out); }
+
+@media (prefers-reduced-motion: reduce) {
+  .beam-run, .shiny, .meteor { animation: none; }
+  .shiny { color: var(--muted); -webkit-text-fill-color: currentColor; }
+  .acc-content[data-state="open"], .acc-content[data-state="closed"] { animation: none; }
+}
