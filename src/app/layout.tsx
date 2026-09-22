@@ -4,6 +4,7 @@ import "./globals.css";
 import { brand, links } from "@/lib/content";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import { ScrollProgress } from "@/components/Visuals";
 
 const sans = Inter({ variable: "--font-sans", subsets: ["latin"], display: "swap" });
 const mono = JetBrains_Mono({ variable: "--font-mono", subsets: ["latin"], display: "swap" });
@@ -89,6 +90,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           Skip to Content
         </a>
+        <ScrollProgress />
         <Nav />
         <main id="main" className="page-in">{children}</main>
         <Footer />
