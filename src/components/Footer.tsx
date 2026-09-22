@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { brand, links } from "@/lib/content";
 
 export default function Footer() {
@@ -25,17 +26,17 @@ export default function Footer() {
             <h2 className="label">Index</h2>
             <ul className="mt-5 space-y-2.5 text-[14px]">
               {[
-                ["#services", "Services"],
-                ["#sectors", "Sectors"],
-                ["#agent", "TELES Agent"],
-                ["#method", "Method"],
-                ["#work", "Work"],
-                ["#brief", "Brief"],
+                ["/services", "Services"],
+                ["/sectors", "Sectors"],
+                ["/agent", "TELES Agent"],
+                ["/work", "Work"],
+                ["/about", "About"],
+                ["/contact", "Contact"],
               ].map(([h, l]) => (
                 <li key={h}>
-                  <a href={h} className="text-muted transition-colors duration-200 hover:text-ink">
+                  <Link href={h} className="text-muted transition-colors duration-200 hover:text-ink">
                     {l}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

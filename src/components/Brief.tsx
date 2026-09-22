@@ -60,23 +60,22 @@ export default function Brief() {
     "w-full border-0 border-b border-line bg-transparent pb-2.5 pt-1 text-[15px] text-ink placeholder:text-dim/70 transition-colors duration-200 hover:border-ink/25 focus:border-accent focus:outline-none focus:ring-0";
 
   return (
-    <section id="brief" className="noise relative scroll-mt-20 bg-paper px-6 py-28 text-bg lg:px-10 lg:py-36">
+    <section id="brief" className="noise relative scroll-mt-20 bg-paper px-6 py-24 text-bg lg:px-10 lg:py-32">
       <div className="mx-auto max-w-[1400px]">
         <div className="grid gap-16 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-24">
           <div>
             <Reveal>
               <p className="label" style={{ color: "rgba(8,8,8,0.42)" }}>
-                <span style={{ color: "var(--accent)" }}>06</span> &nbsp;/&nbsp; Brief
+                The brief
               </p>
-              <h2 className="display mt-7 text-[clamp(2.2rem,5.4vw,4.4rem)]">
-                Tell us what
+              <h2 className="display mt-6 text-[clamp(1.8rem,4vw,3rem)]">
+                Eight fields.
                 <br />
-                you&rsquo;re <span className="serif" style={{ color: "var(--accent)" }}>growing</span>.
+                Two <span className="serif" style={{ color: "var(--accent)" }}>minutes</span>.
               </h2>
-              <p className="mt-7 max-w-[42ch] text-[15px] leading-[1.68]" style={{ color: "rgba(8,8,8,0.6)" }}>
-                Pricing depends on niche, audience, duration, platforms, creative requirements and
-                objective. Share the details and we&rsquo;ll review your requirements and recommend a
-                suitable advertising approach.
+              <p className="mt-6 max-w-[40ch] text-[15px] leading-[1.68]" style={{ color: "rgba(8,8,8,0.6)" }}>
+                These are the same questions we ask in discovery. Fill them in and your brief opens
+                pre-written in Telegram or your email client.
               </p>
             </Reveal>
 

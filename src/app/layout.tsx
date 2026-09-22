@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { brand, links } from "@/lib/content";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 
 const sans = Inter({ variable: "--font-sans", subsets: ["latin"], display: "swap" });
 const mono = JetBrains_Mono({ variable: "--font-mono", subsets: ["latin"], display: "swap" });
@@ -80,7 +82,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${sans.variable} ${mono.variable} ${serif.variable} antialiased`}>{children}</body>
+      <body className={`${sans.variable} ${mono.variable} ${serif.variable} antialiased`}>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-5 focus:top-5 focus:z-[100] focus:rounded-full focus:bg-paper focus:px-5 focus:py-2.5 focus:text-sm focus:font-medium focus:text-bg"
+        >
+          Skip to Content
+        </a>
+        <Nav />
+        <main id="main" className="page-in">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
