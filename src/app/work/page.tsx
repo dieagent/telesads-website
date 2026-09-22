@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHead, NextStep } from "@/components/Page";
 import { Reveal } from "@/components/Reveal";
+import { Parallax } from "@/components/Depth";
 import { portfolio, reportingMetrics, process, brand } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -87,8 +88,16 @@ export default function WorkPage() {
       </section>
 
       {/* reporting */}
-      <section className="mt-28 px-6 lg:mt-36 lg:px-10">
-        <div className="mx-auto max-w-[1400px]">
+      <section className="relative mt-28 overflow-hidden px-6 lg:mt-36 lg:px-10">
+        <Parallax speed={0.1}>
+          <p
+            aria-hidden="true"
+            className="display stroke-txt pointer-events-none absolute -right-8 top-0 whitespace-nowrap text-[clamp(5rem,16vw,14rem)] leading-none opacity-30"
+          >
+            MEASURE
+          </p>
+        </Parallax>
+        <div className="relative mx-auto max-w-[1400px]">
           <Reveal>
             <p className="label">Reporting</p>
             <h2 className="display mt-7 max-w-[16ch] text-[clamp(2rem,4.6vw,3.6rem)]">
