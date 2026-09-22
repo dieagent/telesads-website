@@ -1,71 +1,79 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Logo from "./Logo";
 import { links } from "@/lib/content";
 
 const items = [
-  { href: "#services", label: "Services" },
-  { href: "#who-we-serve", label: "Who We Serve" },
-  { href: "#teles-agent", label: "TELES Agent" },
-  { href: "#process", label: "Process" },
-  { href: "#work", label: "Work" },
+  ["#services", "Services"],
+  ["#sectors", "Sectors"],
+  ["#agent", "Agent"],
+  ["#method", "Method"],
+  ["#work", "Work"],
 ];
 
 export default function Nav() {
-  const [scrolled, setScrolled] = useState(false);
+  const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const f = () => setSolid(window.scrollY > 24);
+    f();
+    window.addEventListener("scroll", f, { passive: true });
+    return () => window.removeEventListener("scroll", f);
   }, []);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    const k = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", k);
+    return () => window.removeEventListener("keydown", k);
   }, []);
 
   return (
     <header
-      className="fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-200"
+      className="fixed inset-x-0 top-0 z-50"
       style={{
-        transitionTimingFunction: "var(--ease-out)",
-        backgroundColor: scrolled ? "rgba(10,10,10,0.72)" : "transparent",
-        borderColor: scrolled ? "var(--line)" : "transparent",
-        backdropFilter: scrolled ? "blur(14px)" : "none",
         paddingTop: "env(safe-area-inset-top)",
+        backgroundColor: solid ? "rgba(8,8,8,0.8)" : "transparent",
+        backdropFilter: solid ? "blur(16px) saturate(1.4)" : "none",
+        borderBottom: `1px solid ${solid ? "var(--line)" : "transparent"}`,
+        transition:
+          "background-color 300ms var(--ease-out), border-color 300ms var(--ease-out), backdrop-filter 300ms var(--ease-out)",
       }}
     >
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5"
+        className="mx-auto flex h-[68px] max-w-[1400px] items-center justify-between px-6 lg:px-10"
       >
-        <a href="#top" className="flex items-center gap-2.5" translate="no">
-          <Logo size={26} />
-          <span className="text-[15px] font-semibold tracking-[0.14em]">TELES&nbsp;ADS</span>
+        <a href="#top" className="flex items-baseline gap-2" translate="no">
+          <span className="text-[15px] font-medium tracking-[0.24em]">TELES</span>
+          <span className="text-[15px] font-medium tracking-[0.24em] text-accent">ADS</span>
         </a>
 
-        <ul className="hidden items-center gap-7 md:flex">
-          {items.map((i) => (
-            <li key={i.href}>
+        <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">
+          {items.map(([h, l]) => (
+            <li key={h}>
               <a
-                href={i.href}
-                className="text-[13.5px] text-muted transition-colors duration-150 hover:text-fg"
+                href={h}
+                className="text-[13px] text-muted transition-colors duration-200 hover:text-ink"
               >
-                {i.label}
+                {l}
               </a>
             </li>
           ))}
         </ul>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <a
+            href={links.contact}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden text-[13px] text-muted transition-colors duration-200 hover:text-ink sm:block"
+          >
+            Telegram
+          </a>
           <a
             href="#brief"
-            className="hidden rounded-full bg-fg px-4 py-2 text-[13.5px] font-semibold text-bg transition-[transform,opacity] duration-150 hover:opacity-90 active:scale-[0.98] md:inline-block"
+            className="group hidden items-center gap-2 rounded-full bg-paper px-5 py-2 text-[13px] font-medium text-bg transition-transform duration-150 active:scale-[0.97] sm:inline-flex"
             style={{ transitionTimingFunction: "var(--ease-out)" }}
           >
             Start a Campaign
@@ -74,58 +82,60 @@ export default function Nav() {
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
-            aria-controls="mobile-menu"
+            aria-controls="mnav"
             onClick={() => setOpen((v) => !v)}
-            className="grid size-10 place-items-center rounded-full border border-line md:hidden"
+            className="grid size-9 place-items-center lg:hidden"
           >
-            <svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true">
-              <path
-                d="M0 1h16M0 6h16M0 11h16"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                fill="none"
+            <span className="relative block h-[9px] w-[18px]">
+              <span
+                className="absolute left-0 block h-px w-full bg-ink transition-transform duration-300"
+                style={{
+                  top: 0,
+                  transformOrigin: "center",
+                  transform: open ? "translateY(4px) rotate(45deg)" : "none",
+                  transitionTimingFunction: "var(--ease-out)",
+                }}
               />
-            </svg>
+              <span
+                className="absolute bottom-0 left-0 block h-px w-full bg-ink transition-transform duration-300"
+                style={{
+                  transformOrigin: "center",
+                  transform: open ? "translateY(-5px) rotate(-45deg)" : "none",
+                  transitionTimingFunction: "var(--ease-out)",
+                }}
+              />
+            </span>
           </button>
         </div>
       </nav>
 
       {open && (
         <div
-          id="mobile-menu"
-          className="border-t border-line bg-bg/95 px-5 pb-5 pt-3 backdrop-blur md:hidden"
+          id="mnav"
+          className="border-t border-line bg-bg/95 px-6 pb-8 pt-4 backdrop-blur-xl lg:hidden"
           style={{ overscrollBehavior: "contain" }}
         >
-          <ul className="flex flex-col">
-            {items.map((i) => (
-              <li key={i.href}>
+          <ul>
+            {items.map(([h, l], i) => (
+              <li key={h} className="rule">
                 <a
-                  href={i.href}
+                  href={h}
                   onClick={() => setOpen(false)}
-                  className="block border-b border-line py-3 text-[15px] text-muted transition-colors duration-150 hover:text-fg"
+                  className="flex items-baseline gap-4 py-4 text-[22px] tracking-[-0.02em]"
                 >
-                  {i.label}
+                  <span className="label tnum">0{i + 1}</span>
+                  {l}
                 </a>
               </li>
             ))}
           </ul>
-          <div className="mt-4 flex gap-2">
-            <a
-              href="#brief"
-              onClick={() => setOpen(false)}
-              className="flex-1 rounded-full bg-fg px-4 py-2.5 text-center text-sm font-semibold text-bg"
-            >
-              Start a Campaign
-            </a>
-            <a
-              href={links.contact}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 rounded-full border border-line px-4 py-2.5 text-center text-sm font-semibold"
-            >
-              Telegram
-            </a>
-          </div>
+          <a
+            href="#brief"
+            onClick={() => setOpen(false)}
+            className="mt-6 block rounded-full bg-paper py-3 text-center text-[14px] font-medium text-bg"
+          >
+            Start a Campaign
+          </a>
         </div>
       )}
     </header>

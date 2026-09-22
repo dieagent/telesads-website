@@ -1,4 +1,3 @@
-import Logo from "./Logo";
 import { brand, links } from "@/lib/content";
 
 export default function Footer() {
@@ -6,41 +5,36 @@ export default function Footer() {
 
   return (
     <footer
-      className="py-16"
-      style={{ paddingBottom: "calc(4rem + env(safe-area-inset-bottom))" }}
+      className="px-6 pt-24 lg:px-10"
+      style={{ paddingBottom: "calc(2.5rem + env(safe-area-inset-bottom))" }}
     >
-      <div className="mx-auto max-w-6xl px-5">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="grid gap-14 lg:grid-cols-[1.6fr_1fr_1fr]">
           <div>
-            <div className="flex items-center gap-2.5">
-              <Logo size={26} />
-              <span className="text-[15px] font-semibold tracking-[0.14em]" translate="no">
-                TELES&nbsp;ADS
-              </span>
+            <div className="flex items-baseline gap-2" translate="no">
+              <span className="text-[15px] font-medium tracking-[0.24em]">TELES</span>
+              <span className="text-[15px] font-medium tracking-[0.24em] text-accent">ADS</span>
             </div>
-            <p className="mt-4 max-w-sm text-[14px] leading-relaxed text-muted">
+            <p className="mt-6 max-w-[40ch] text-[14px] leading-[1.65] text-muted">
               {brand.shortBio}
             </p>
-            <p className="mt-4 text-[13px] text-muted/70">{brand.regions}</p>
+            <p className="label mt-6">{brand.regions}</p>
           </div>
 
           <nav aria-label="Sections">
-            <h2 className="text-[12px] uppercase tracking-[0.2em] text-muted/70">Explore</h2>
-            <ul className="mt-4 space-y-2.5 text-[14px]">
+            <h2 className="label">Index</h2>
+            <ul className="mt-5 space-y-2.5 text-[14px]">
               {[
                 ["#services", "Services"],
-                ["#who-we-serve", "Who We Serve"],
-                ["#teles-agent", "TELES Agent"],
-                ["#process", "Process"],
+                ["#sectors", "Sectors"],
+                ["#agent", "TELES Agent"],
+                ["#method", "Method"],
                 ["#work", "Work"],
-                ["#brief", "Start a Campaign"],
-              ].map(([href, label]) => (
-                <li key={href}>
-                  <a
-                    href={href}
-                    className="text-muted transition-colors duration-150 hover:text-fg"
-                  >
-                    {label}
+                ["#brief", "Brief"],
+              ].map(([h, l]) => (
+                <li key={h}>
+                  <a href={h} className="text-muted transition-colors duration-200 hover:text-ink">
+                    {l}
                   </a>
                 </li>
               ))}
@@ -48,29 +42,29 @@ export default function Footer() {
           </nav>
 
           <nav aria-label="Contact">
-            <h2 className="text-[12px] uppercase tracking-[0.2em] text-muted/70">Connect</h2>
-            <ul className="mt-4 space-y-2.5 text-[14px]">
+            <h2 className="label">Connect</h2>
+            <ul className="mt-5 space-y-2.5 text-[14px]">
               {[
                 [links.channel, "Telegram Channel"],
-                [links.contact, "Contact on Telegram"],
+                [links.contact, "Direct Contact"],
                 [links.agentBot, "TELES Agent Bot"],
                 [links.feedback, "Feedback"],
-              ].map(([href, label]) => (
-                <li key={href}>
+              ].map(([h, l]) => (
+                <li key={h}>
                   <a
-                    href={href}
+                    href={h}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-muted transition-colors duration-150 hover:text-fg"
+                    className="text-muted transition-colors duration-200 hover:text-ink"
                   >
-                    {label}
+                    {l}
                   </a>
                 </li>
               ))}
               <li>
                 <a
                   href={`mailto:${links.email}`}
-                  className="break-words text-muted transition-colors duration-150 hover:text-fg"
+                  className="break-words text-muted transition-colors duration-200 hover:text-ink"
                 >
                   {links.email}
                 </a>
@@ -79,16 +73,28 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="mt-14 border-t border-line pt-6">
-          <p className="max-w-3xl text-[12.5px] leading-relaxed text-muted/70">
+        {/* oversized wordmark */}
+        <div className="mt-24 overflow-hidden" aria-hidden="true">
+          <p
+            className="display select-none whitespace-nowrap text-[clamp(4rem,19vw,17rem)] leading-[0.8]"
+            style={{ color: "rgba(245,245,243,0.055)" }}
+          >
+            TELES ADS
+          </p>
+        </div>
+
+        <div className="rule mt-10 pt-7">
+          <p className="max-w-[80ch] text-[12px] leading-[1.65] text-dim">
             Advertising results depend on niche, offer, creative, audience, budget and platform
             conditions. TELES ADS does not guarantee financial returns, member counts or
             conversions, and does not provide investment advice. Campaigns in regulated categories
             run only where lawful and compliant with platform rules and local advertising policy.
           </p>
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-[12.5px] text-muted/70">
-            <p className="tnum">© {year} TELES ADS. All rights reserved.</p>
-            <p translate="no">{brand.rhythm}</p>
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+            <p className="label tnum">© {year} TELES ADS</p>
+            <p className="label" translate="no">
+              Automate · Advertise · Achieve
+            </p>
           </div>
         </div>
       </div>

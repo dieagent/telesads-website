@@ -1,9 +1,10 @@
-import Reveal from "./Reveal";
-import { brand, links } from "@/lib/content";
+import Image from "next/image";
+import { links } from "@/lib/content";
 
-const marks = [
+const ticker = [
   "Telegram Advertising",
-  "Meta & Instagram Ads",
+  "Audience Acquisition",
+  "Meta & Instagram",
   "Google Ads",
   "Creative Production",
   "Growth Consulting",
@@ -13,46 +14,57 @@ const marks = [
 
 export default function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
-      <div aria-hidden="true" className="grid-bg pointer-events-none absolute inset-0" />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[38%] h-[420px] w-[820px] max-w-[130vw] -translate-x-1/2 rounded-full opacity-[0.16] blur-[120px]"
-        style={{ background: "var(--accent)" }}
-      />
+    <section id="top" className="relative min-h-[100svh] overflow-hidden">
+      {/* full-bleed art */}
+      <div className="pointer-events-none absolute inset-0">
+        <Image
+          src="/brand/converge.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-[0.55]"
+          style={{ objectPosition: "70% 40%" }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to right, #080808 8%, rgba(8,8,8,0.82) 42%, rgba(8,8,8,0.25) 72%, rgba(8,8,8,0.7) 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-x-0 bottom-0 h-64"
+          style={{ background: "linear-gradient(to top, #080808, transparent)" }}
+        />
+      </div>
 
-      <div className="relative mx-auto max-w-6xl px-5">
-        <Reveal>
-          <p
-            className="inline-flex items-center gap-2 rounded-full border border-line bg-white/[0.03] px-3.5 py-1.5 text-[12.5px] text-muted"
-            translate="no"
-          >
-            <span className="size-1.5 rounded-full" style={{ background: "var(--accent)" }} />
-            {brand.rhythm}
+      <div className="relative mx-auto flex min-h-[100svh] max-w-[1400px] flex-col justify-end px-6 pb-14 pt-32 lg:px-10 lg:pb-16">
+        <div className="max-w-[1000px]">
+          <p className="label mb-8 flex items-center gap-3">
+            <span className="inline-block h-px w-10 bg-accent" aria-hidden="true" />
+            Telegram Advertising &amp; Digital Growth
           </p>
-        </Reveal>
 
-        <Reveal delay={60}>
-          <h1 className="mt-6 max-w-4xl text-[clamp(2.4rem,7vw,4.6rem)] font-semibold leading-[1.03] tracking-[-0.03em]">
-            Your Gateway to
-            <br />
-            <span className="text-muted">Telegram Growth.</span>
+          <h1 className="display text-[clamp(3.1rem,11.5vw,10.5rem)]">
+            <span className="block">Your gateway</span>
+            <span className="block">
+              to <span className="serif text-accent">Telegram</span> growth
+            </span>
           </h1>
-        </Reveal>
+        </div>
 
-        <Reveal delay={120}>
-          <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-muted">
-            A specialized Telegram advertising and digital growth agency. We help trading, crypto,
-            Web3, creator, SaaS and online-business communities acquire relevant audiences,
-            improve visibility and scale through strategic advertising and automation.
+        <div className="mt-12 grid gap-10 lg:mt-16 lg:grid-cols-[1fr_auto] lg:items-end">
+          <p className="max-w-[46ch] text-[16px] leading-[1.62] text-muted">
+            We build targeted advertising and automation for the businesses that live on Telegram —
+            trading, crypto, Web3, creator, SaaS and online-commerce communities. Real audience
+            research, disciplined creative testing, honest reporting.
           </p>
-        </Reveal>
 
-        <Reveal delay={180}>
-          <div className="mt-9 flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <a
               href="#brief"
-              className="rounded-full bg-fg px-6 py-3 text-[15px] font-semibold text-bg transition-[transform,opacity] duration-150 hover:opacity-90 active:scale-[0.98]"
+              className="rounded-full bg-paper px-7 py-3.5 text-[14px] font-medium text-bg transition-transform duration-150 active:scale-[0.97]"
               style={{ transitionTimingFunction: "var(--ease-out)" }}
             >
               Start a Campaign
@@ -61,32 +73,25 @@ export default function Hero() {
               href={links.channel}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full border border-line px-6 py-3 text-[15px] font-semibold text-fg transition-[background-color,border-color] duration-150 hover:border-white/25 hover:bg-white/[0.04]"
+              className="rounded-full border border-line px-7 py-3.5 text-[14px] font-medium transition-colors duration-200 hover:border-ink/30 hover:bg-white/[0.04]"
             >
-              View Telegram Channel
+              View Channel
             </a>
           </div>
-        </Reveal>
-
-        <Reveal delay={240}>
-          <p className="mt-6 text-[13px] text-muted/80">{brand.regions}</p>
-        </Reveal>
+        </div>
       </div>
 
-      {/* Marquee — constant motion, linear, pauses on hover, off under reduced motion */}
-      <div
-        className="marquee relative mt-16 flex overflow-hidden border-y border-line py-4"
-        aria-hidden="true"
-      >
-        <div className="marquee-track flex shrink-0 gap-10 pr-10">
-          {[...marks, ...marks].map((m, i) => (
-            <span
-              key={i}
-              className="whitespace-nowrap text-[13px] uppercase tracking-[0.2em] text-muted/70"
-            >
-              {m}
-            </span>
-          ))}
+      {/* ticker */}
+      <div className="absolute inset-x-0 bottom-0 overflow-hidden border-t border-line bg-bg/60 py-3.5 backdrop-blur-sm">
+        <div className="flex" aria-hidden="true">
+          <div className="drift flex shrink-0">
+            {[...ticker, ...ticker].map((t, i) => (
+              <span key={i} className="label flex items-center whitespace-nowrap px-6">
+                {t}
+                <span className="ml-6 text-accent">/</span>
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>
