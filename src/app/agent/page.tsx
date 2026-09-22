@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHead, NextStep } from "@/components/Page";
 import { Reveal } from "@/components/Reveal";
+import { TiltCard } from "@/components/Depth";
 import { agentCapabilities, links } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -37,7 +38,8 @@ export default function AgentPage() {
         <div className="mx-auto grid max-w-[1400px] gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-20">
           {/* conversation artifact */}
           <Reveal>
-            <div className="relative overflow-hidden rounded-3xl border border-line bg-[#0b0b0c] p-6 lg:p-9">
+            <TiltCard strength={5}>
+            <div className="tilt-inner relative overflow-hidden rounded-3xl border border-line bg-[#0b0b0c] p-6 lg:p-9">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 opacity-50"
@@ -76,6 +78,7 @@ export default function AgentPage() {
                 </div>
               </div>
             </div>
+            </TiltCard>
             <p className="mt-4 text-[12.5px] leading-[1.6] text-dim">
               Illustrative exchange showing operating policy: the agent qualifies first, refuses to
               quote unverified pricing, and never guarantees outcomes.

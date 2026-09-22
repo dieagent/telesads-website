@@ -27,6 +27,11 @@ export function PageHead({
           backgroundSize: "calc(100% / 6) 100%",
         }}
       />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-40 right-[-8%] size-[560px] rounded-full opacity-[0.13] blur-[140px]"
+        style={{ background: "var(--accent)" }}
+      />
       <div className="relative mx-auto max-w-[1400px]">
         <p className="label flex items-center gap-3">
           <span className="text-accent">{index}</span>

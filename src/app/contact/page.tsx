@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Brief from "@/components/Brief";
-import Faq from "@/components/Faq";
 import { PageHead } from "@/components/Page";
 
 export const metadata: Metadata = {
@@ -24,7 +23,6 @@ export default function ContactPage() {
         ]}
       />
       <Brief />
-      <Faq />
     </>
   );
 }

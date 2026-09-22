@@ -36,7 +36,7 @@ export default function ParticleField() {
       cv.height = Math.floor(h * dpr);
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const target = Math.round(Math.min(130, Math.max(50, (w * h) / 12000)));
+      const target = Math.round(Math.min(280, Math.max(90, (w * h) / 5200)));
       ps = Array.from({ length: target }, () => spawn(true));
     }
 
@@ -75,6 +75,18 @@ export default function ParticleField() {
         p.vy += Math.sin(t * 2.1 + p.seed + p.x * 0.006) * 0.008 * (1 - prog);
         p.vx += 0.0055 * prog;
 
+        // pointer attraction
+        if (pointer.on) {
+          const dx = pointer.x - p.x;
+          const dy = pointer.y - p.y;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < 30000 && d2 > 1) {
+            const f = 42 / d2;
+            p.vx += dx * f;
+            p.vy += dy * f;
+          }
+        }
+
         p.vy *= 0.955;
         p.x += p.vx;
         p.y += p.vy;
@@ -82,7 +94,7 @@ export default function ParticleField() {
         if (p.x > w + 20) Object.assign(p, spawn());
 
         const focus = Math.pow(prog, 1.7);
-        const alpha = Math.min(1, 0.06 + focus * 0.5) * (0.3 + p.life * 0.5);
+        const alpha = Math.min(1, 0.1 + focus * 0.95) * (0.35 + p.life * 0.65);
         const rad = p.r * (0.7 + focus * 0.9);
 
         // hot core near the axis on the right
@@ -97,13 +109,19 @@ export default function ParticleField() {
             : `rgba(255,92,0,${alpha * 0.92})`;
         ctx!.fill();
 
+        if (focus > 0.55 && p.r > 1.1) {
+          ctx!.beginPath();
+          ctx!.arc(p.x, p.y, rad * 5.5, 0, 6.283);
+          ctx!.fillStyle = `rgba(255,92,0,${0.035 * focus})`;
+          ctx!.fill();
+        }
       }
 
       // focused beam
       const g = ctx!.createLinearGradient(w * 0.55, 0, w, 0);
       g.addColorStop(0, "rgba(255,92,0,0)");
-      g.addColorStop(0.7, "rgba(255,92,0,0.18)");
-      g.addColorStop(1, "rgba(255,190,140,0.4)");
+      g.addColorStop(0.7, "rgba(255,92,0,0.32)");
+      g.addColorStop(1, "rgba(255,190,140,0.75)");
       ctx!.fillStyle = g;
       ctx!.fillRect(w * 0.55, axis - 0.6, w * 0.45, 1.2);
 
