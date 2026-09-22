@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Reveal, MaskLines } from "./Reveal";
 import {
   agentCapabilities,
@@ -194,28 +193,59 @@ export function Agent() {
       <div className="mx-auto max-w-[1400px]">
         <div className="overflow-hidden rounded-3xl border border-line">
           <div className="grid lg:grid-cols-2">
-            {/* image panel */}
-            <div className="relative min-h-[320px] lg:min-h-[620px]">
-              <Image
-                src="/brand/texture-seam.jpg"
-                alt=""
-                fill
-                loading="lazy"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
+            {/* product artifact — a real TELES Agent exchange, drawn in markup */}
+            <div className="relative flex flex-col justify-between overflow-hidden border-b border-line bg-[#0b0b0c] p-7 lg:border-b-0 lg:border-r lg:p-10">
               <div
-                className="absolute inset-0"
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 opacity-[0.55]"
                 style={{
-                  background:
-                    "linear-gradient(to bottom right, rgba(8,8,8,0.15), rgba(8,8,8,0.75))",
+                  backgroundImage:
+                    "radial-gradient(rgba(245,245,243,0.11) 1px, transparent 1px)",
+                  backgroundSize: "22px 22px",
                 }}
               />
-              <div className="absolute inset-x-0 bottom-0 p-8 lg:p-10">
-                <p className="serif text-[clamp(1.5rem,2.6vw,2.2rem)] leading-[1.25]">
-                  Automate · Advertise · Achieve
-                </p>
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -left-24 -top-24 size-64 rounded-full opacity-[0.16] blur-[90px]"
+                style={{ background: "var(--accent)" }}
+              />
+
+              <div className="relative">
+                <div className="flex items-center gap-2.5 border-b border-line pb-4">
+                  <span className="grid size-7 place-items-center rounded-full bg-accent text-[11px] font-semibold text-bg">
+                    T
+                  </span>
+                  <span className="text-[13px] font-medium" translate="no">
+                    TELES Agent
+                  </span>
+                  <span className="label ml-auto flex items-center gap-1.5">
+                    <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />
+                    Online
+                  </span>
+                </div>
+
+                <div className="mt-6 space-y-3.5">
+                  <p className="max-w-[86%] rounded-2xl rounded-tl-sm border border-line bg-white/[0.035] px-4 py-3 text-[13.5px] leading-[1.55] text-muted">
+                    I run a forex signals channel. Can you grow it?
+                  </p>
+                  <p className="ml-auto max-w-[92%] rounded-2xl rounded-tr-sm border border-accent/25 bg-accent/[0.07] px-4 py-3 text-[13.5px] leading-[1.55] text-ink">
+                    Yes — that&rsquo;s a core niche for us. Before I recommend an approach I need
+                    four things: your destination link, target countries, campaign objective and
+                    budget range.
+                  </p>
+                  <p className="max-w-[86%] rounded-2xl rounded-tl-sm border border-line bg-white/[0.035] px-4 py-3 text-[13.5px] leading-[1.55] text-muted">
+                    Members. India and UAE. Around $800.
+                  </p>
+                  <p className="ml-auto max-w-[94%] rounded-2xl rounded-tr-sm border border-accent/25 bg-accent/[0.07] px-4 py-3 text-[13.5px] leading-[1.55] text-ink">
+                    Understood. I&rsquo;ll route this to channel-placement research and pass current
+                    pricing from an admin — I don&rsquo;t quote unverified numbers.
+                  </p>
+                </div>
               </div>
+
+              <p className="serif relative mt-10 text-[clamp(1.35rem,2.3vw,1.9rem)] leading-[1.2] text-ink/90">
+                Automate · Advertise · Achieve
+              </p>
             </div>
 
             {/* content panel */}

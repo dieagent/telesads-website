@@ -36,13 +36,11 @@ export const metadata: Metadata = {
     siteName: brand.name,
     title: "TELES ADS — Your Gateway to Telegram Growth",
     description: brand.shortBio,
-    images: [{ url: "/brand/og-hero.png", width: 1200, height: 630, alt: "TELES ADS" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "TELES ADS — Your Gateway to Telegram Growth",
     description: brand.shortBio,
-    images: ["/brand/og-hero.png"],
   },
   robots: { index: true, follow: true },
 };
