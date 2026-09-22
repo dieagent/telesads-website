@@ -36,7 +36,7 @@ export function ScrollProgress() {
     };
   }, []);
   return (
-    <div className="fixed inset-x-0 top-0 z-[60] h-px bg-transparent" aria-hidden="true">
+    <div className="fixed inset-x-0 top-0 z-[9998] h-px bg-transparent" aria-hidden="true">
       <div
         className="h-full origin-left bg-accent"
         style={{ transform: `scaleX(${p})`, transition: "transform 90ms linear" }}
