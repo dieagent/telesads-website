@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { PageHead, NextStep } from "@/components/Page";
 import { Reveal } from "@/components/Reveal";
 import { services } from "@/lib/content";
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
+      <BreadcrumbSchema items={[{ name: "Services", path: "/services" }]} />
       <PageHead
         index="01"
         kicker="Services"

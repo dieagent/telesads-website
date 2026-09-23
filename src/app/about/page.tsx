@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { PageHead, NextStep } from "@/components/Page";
 import { Reveal } from "@/components/Reveal";
 import { brand } from "@/lib/content";
@@ -24,6 +25,7 @@ const personality = ["Professional", "Modern", "Direct", "Premium", "Strategic",
 export default function AboutPage() {
   return (
     <>
+      <BreadcrumbSchema items={[{ name: "About", path: "/about" }]} />
       <PageHead
         index="05"
         kicker="About"

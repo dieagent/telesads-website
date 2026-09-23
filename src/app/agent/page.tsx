@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { PageHead, NextStep } from "@/components/Page";
 import { Reveal } from "@/components/Reveal";
 import { TiltCard } from "@/components/Depth";
@@ -23,6 +24,7 @@ const thread = [
 export default function AgentPage() {
   return (
     <>
+      <BreadcrumbSchema items={[{ name: "TELES Agent", path: "/agent" }]} />
       <PageHead
         index="03"
         kicker="Product"

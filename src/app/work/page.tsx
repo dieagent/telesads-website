@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BreadcrumbSchema } from "@/components/Breadcrumbs";
 import { PageHead, NextStep } from "@/components/Page";
 import { Reveal } from "@/components/Reveal";
 import { Parallax } from "@/components/Depth";
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 export default function WorkPage() {
   return (
     <>
+      <BreadcrumbSchema items={[{ name: "Work", path: "/work" }]} />
       <PageHead
         index="04"
         kicker="Work & Method"
