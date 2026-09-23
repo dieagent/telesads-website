@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import MeshGlobe from "./MeshGlobe";
+import { Globe } from "./ui/globe";
 import { links } from "@/lib/content";
 
 export default function Hero() {
@@ -10,67 +10,77 @@ export default function Hero() {
 
   const t = (d: number) => ({
     opacity: on ? 1 : 0,
-    transform: on ? "none" : "translateY(16px)",
-    transition: `opacity 800ms var(--ease-out) ${d}ms, transform 800ms var(--ease-out) ${d}ms`,
+    transform: on ? "none" : "translateY(18px)",
+    transition: `opacity 900ms var(--ease-out) ${d}ms, transform 900ms var(--ease-out) ${d}ms`,
   });
 
   return (
-    <section id="top" className="relative flex min-h-[100svh] items-center overflow-hidden">
-      {/* mesh globe — bleeds off the right edge */}
+    <section
+      id="top"
+      className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden"
+    >
+      {/* ── globe: centered, low, mostly below the fold line ── */}
       <div
-        className="pointer-events-auto absolute -right-[22%] top-1/2 aspect-square w-[min(1180px,92vw)] -translate-y-1/2 cursor-grab active:cursor-grabbing sm:-right-[14%] lg:-right-[8%] lg:w-[min(1080px,62vw)]"
+        className="pointer-events-none absolute left-1/2 top-[52%] w-[min(1500px,168vw)] -translate-x-1/2 md:w-[min(1180px,118vw)] lg:w-[min(1020px,82vw)]"
         style={{
           opacity: on ? 1 : 0,
-          transition: "opacity 1400ms var(--ease-out) 200ms",
+          transition: "opacity 1600ms var(--ease-out) 250ms",
         }}
       >
-        <MeshGlobe />
+        <div className="pointer-events-auto relative aspect-square">
+          <Globe />
+        </div>
       </div>
 
-      {/* left-side scrim so type always wins */}
+      {/* vignette: darkens the globe's outer edge into the page */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "linear-gradient(100deg, #080808 18%, rgba(8,8,8,0.88) 38%, rgba(8,8,8,0.42) 58%, rgba(8,8,8,0.06) 76%)",
+            "radial-gradient(120% 90% at 50% 62%, rgba(8,8,8,0) 38%, rgba(8,8,8,0.55) 62%, #080808 88%)",
+        }}
+      />
+      {/* top fade: keeps the headline clear of the sphere */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[58%]"
+        style={{
+          background:
+            "linear-gradient(180deg, #080808 26%, rgba(8,8,8,0.82) 58%, rgba(8,8,8,0) 100%)",
         }}
       />
 
-      <div className="pointer-events-none relative mx-auto w-full max-w-[1400px] px-6 pt-24 lg:px-10">
-        <p className="label" style={t(80)}>
-          Telegram Advertising &amp; Digital Growth Agency &nbsp;—&nbsp; India · UAE · Worldwide
-        </p>
+      {/* ── content ── */}
+      <div className="pointer-events-none relative mx-auto w-full max-w-[1400px] px-6 pt-28 lg:px-10">
+        <div className="mx-auto max-w-[1000px] text-center">
+          <p className="label" style={t(80)}>
+            Telegram Advertising &amp; Digital Growth Agency &nbsp;—&nbsp; India · UAE ·
+            Worldwide
+          </p>
 
-        <h1
-          className="mt-8 font-medium leading-[0.92] tracking-[-0.045em] text-[clamp(3rem,8.4vw,7.6rem)]"
-          style={t(160)}
-        >
-          <span className="block">Your gateway to</span>
-          <span className="block">
-            <span className="text-accent">Telegram</span> growth.
-          </span>
-        </h1>
-
-        <div
-          className="mt-14 h-px w-full max-w-[720px] bg-line"
-          style={t(280)}
-          aria-hidden="true"
-        />
-
-        <div className="mt-8 flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
-          <p
-            className="max-w-[46ch] text-[15.5px] leading-[1.68] text-muted"
-            style={t(340)}
+          <h1
+            className="mt-9 font-medium leading-[0.9] tracking-[-0.045em] text-[clamp(2.9rem,8.6vw,7.4rem)]"
+            style={{ ...t(170), textWrap: "balance" }}
           >
-            We help trading, crypto, Web3, creator, SaaS, and online-business communities acquire
-            relevant audiences, improve visibility, and scale through strategic advertising and
-            automation.
+            <span className="block">Your gateway to</span>
+            <span className="block">
+              <span className="text-accent">Telegram</span> growth.
+            </span>
+          </h1>
+
+          <p
+            className="mx-auto mt-9 max-w-[58ch] text-[15.5px] leading-[1.7] text-muted"
+            style={t(300)}
+          >
+            We help trading, crypto, Web3, creator, SaaS, and online-business communities
+            acquire relevant audiences, improve visibility, and scale through strategic
+            advertising and automation.
           </p>
 
           <div
-            className="pointer-events-auto flex flex-wrap items-center gap-5"
-            style={t(420)}
+            className="pointer-events-auto mt-11 flex flex-wrap items-center justify-center gap-5"
+            style={t(400)}
           >
             <a
               href="/contact"
@@ -78,7 +88,10 @@ export default function Hero() {
               style={{ transitionTimingFunction: "var(--ease-out)" }}
             >
               Start a Campaign
-              <span className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true">
+              <span
+                className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                aria-hidden="true"
+              >
                 ↗
               </span>
             </a>
@@ -92,9 +105,16 @@ export default function Hero() {
           </div>
         </div>
 
-        <p className="sr-only">
-          Contact us on Telegram at {links.contact}
-        </p>
+        <p className="sr-only">Contact us on Telegram at {links.contact}</p>
+      </div>
+
+      {/* hairline + drag hint sit over the globe's upper curve */}
+      <div
+        className="pointer-events-none relative mx-auto mt-16 w-full max-w-[1400px] px-6 lg:px-10"
+        style={t(520)}
+      >
+        <div className="mx-auto h-px w-full max-w-[560px] bg-line" aria-hidden="true" />
+        <p className="label mt-5 text-center text-dim">Drag the globe to spin it</p>
       </div>
     </section>
   );
