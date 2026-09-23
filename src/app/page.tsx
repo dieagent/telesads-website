@@ -6,6 +6,7 @@ import { NextStep } from "@/components/Page";
 import { portfolio } from "@/lib/content";
 import { GrowthChart, FunnelViz, Stat, ScrollSkew } from "@/components/Visuals";
 import { Reach, ServiceTrack, SectorMosaic, BigQuote } from "@/components/NewSections";
+import AgentChat from "@/components/AgentChat";
 
 /** Scroll-driven oversized marquee. */
 function SkewBand() {
@@ -146,6 +147,7 @@ export default function Home() {
       <Instrumentation />
       <SkewBand />
       <ServiceTrack />
+      <AgentChat />
       <Reach />
       <BigQuote />
       <SectorMosaic />

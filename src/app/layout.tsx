@@ -5,6 +5,7 @@ import { brand, links } from "@/lib/content";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { ScrollProgress } from "@/components/Visuals";
+import { ChatLauncher } from "@/components/AgentChat";
 import Cursor from "@/components/Cursor";
 
 const sans = Inter({ variable: "--font-sans", subsets: ["latin"], display: "swap" });
@@ -97,6 +98,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Nav />
         <main id="main" className="page-in">{children}</main>
         <Footer />
+        <ChatLauncher />
       </body>
     </html>
   );
