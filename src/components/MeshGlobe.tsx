@@ -10,7 +10,6 @@ import { useEffect, useRef } from "react";
  * - Full sphere rendered with depth-fade instead of z-culling: the far side
  *   dissolves into the background rather than being clipped at a hard edge.
  * - Edges depth-sorted back-to-front; line width and alpha both track depth.
- * - Great-circle routes with travelling pulses over the hub nodes.
  * - Buffers preallocated; nothing is allocated per frame.
  */
 export default function MeshGlobe() {
@@ -75,14 +74,6 @@ export default function MeshGlobe() {
       if (v - Math.floor(v) < 0.1) hot[i] = 1;
     }
 
-    /* hub routes: pick well-separated hot nodes, link with great circles */
-    const hubs: number[] = [];
-    for (let i = 0; i < N && hubs.length < 7; i += 47) if (hot[i]) hubs.push(i);
-    const routes: [number, number][] = [];
-    for (let i = 0; i < hubs.length; i++) {
-      routes.push([hubs[i], hubs[(i + 2) % hubs.length]]);
-    }
-
     /* preallocated frame buffers */
     const rx = new Float32Array(N);
     const ry = new Float32Array(N);
@@ -108,28 +99,6 @@ export default function MeshGlobe() {
 
     const DIST = 3.6;
 
-    function slerpTo(
-      ax: number, ay: number, az: number,
-      bx: number, by: number, bz: number,
-      t: number,
-      out: { x: number; y: number; z: number },
-    ) {
-      let dot = ax * bx + ay * by + az * bz;
-      dot = dot < -1 ? -1 : dot > 1 ? 1 : dot;
-      const om = Math.acos(dot);
-      if (om < 1e-4) {
-        out.x = ax; out.y = ay; out.z = az;
-        return;
-      }
-      const s = Math.sin(om);
-      const k0 = Math.sin((1 - t) * om) / s;
-      const k1 = Math.sin(t * om) / s;
-      out.x = ax * k0 + bx * k1;
-      out.y = ay * k0 + by * k1;
-      out.z = az * k0 + bz * k1;
-    }
-
-    const tmp = { x: 0, y: 0, z: 0 };
     let time = 0;
 
     function frame() {
@@ -162,15 +131,6 @@ export default function MeshGlobe() {
 
       ctx!.clearRect(0, 0, w, h);
 
-      /* faint atmosphere */
-      const atm = ctx!.createRadialGradient(w / 2, h / 2, R * 0.55, w / 2, h / 2, R * 1.08);
-      atm.addColorStop(0, "rgba(255,92,0,0.05)");
-      atm.addColorStop(1, "rgba(255,92,0,0)");
-      ctx!.fillStyle = atm;
-      ctx!.beginPath();
-      ctx!.arc(w / 2, h / 2, R * 1.08, 0, 6.283);
-      ctx!.fill();
-
       /* ── edges, depth sorted back → front ── */
       for (let i = 0; i < E; i++) edgeZ[i] = (rz[eA[i]] + rz[eB[i]]) * 0.5;
       const ordArr = order as unknown as { sort: (f: (a: number, b: number) => number) => void };
@@ -189,65 +149,10 @@ export default function MeshGlobe() {
         ctx!.moveTo(sx[a], sy[a]);
         ctx!.lineTo(sx[b], sy[b]);
         ctx!.strokeStyle = isHot
-          ? `rgba(255,104,20,${(0.1 + fade * 0.5).toFixed(3)})`
-          : `rgba(238,240,245,${(0.035 + fade * 0.2).toFixed(3)})`;
-        ctx!.lineWidth = 0.35 + fade * 0.55;
+          ? `rgba(255,92,0,${(0.03 + fade * 0.16).toFixed(3)})`
+          : `rgba(226,230,240,${(0.016 + fade * 0.075).toFixed(3)})`;
+        ctx!.lineWidth = 0.3 + fade * 0.35;
         ctx!.stroke();
-      }
-
-      /* ── great-circle routes + travelling pulses ── */
-      for (let r = 0; r < routes.length; r++) {
-        const [a, b] = routes[r];
-        const ax = px[a], ay = py[a], az = pz[a];
-        const bx = px[b], by = py[b], bz = pz[b];
-
-        ctx!.beginPath();
-        let started = false;
-        const STEPS = 40;
-        for (let s = 0; s <= STEPS; s++) {
-          slerpTo(ax, ay, az, bx, by, bz, s / STEPS, tmp);
-          const lift = 1 + Math.sin((s / STEPS) * Math.PI) * 0.085;
-          const X = tmp.x * lift, Y = tmp.y * lift, Z = tmp.z * lift;
-          const x1 = X * cy - Z * sYaw;
-          const z1 = X * sYaw + Z * cy;
-          const y2 = Y * cp - z1 * sp;
-          const z2 = Y * sp + z1 * cp;
-          if (z2 < -0.1) { started = false; continue; }
-          const sc = DIST / (DIST - z2);
-          const X2 = w / 2 + x1 * R * sc;
-          const Y2 = h / 2 + y2 * R * sc;
-          if (!started) { ctx!.moveTo(X2, Y2); started = true; }
-          else ctx!.lineTo(X2, Y2);
-        }
-        ctx!.strokeStyle = "rgba(255,120,40,0.34)";
-        ctx!.lineWidth = 1;
-        ctx!.stroke();
-
-        /* pulse */
-        const pt = (time * 0.13 + r * 0.17) % 1;
-        slerpTo(ax, ay, az, bx, by, bz, pt, tmp);
-        const lift = 1 + Math.sin(pt * Math.PI) * 0.085;
-        const X = tmp.x * lift, Y = tmp.y * lift, Z = tmp.z * lift;
-        const x1 = X * cy - Z * sYaw;
-        const z1 = X * sYaw + Z * cy;
-        const y2 = Y * cp - z1 * sp;
-        const z2 = Y * sp + z1 * cp;
-        if (z2 > -0.05) {
-          const sc = DIST / (DIST - z2);
-          const X2 = w / 2 + x1 * R * sc;
-          const Y2 = h / 2 + y2 * R * sc;
-          const g = ctx!.createRadialGradient(X2, Y2, 0, X2, Y2, 9);
-          g.addColorStop(0, "rgba(255,190,140,0.85)");
-          g.addColorStop(1, "rgba(255,92,0,0)");
-          ctx!.fillStyle = g;
-          ctx!.beginPath();
-          ctx!.arc(X2, Y2, 9, 0, 6.283);
-          ctx!.fill();
-          ctx!.beginPath();
-          ctx!.arc(X2, Y2, 1.7, 0, 6.283);
-          ctx!.fillStyle = "rgba(255,225,200,0.95)";
-          ctx!.fill();
-        }
       }
 
       /* ── nodes, depth sorted ── */
@@ -261,15 +166,15 @@ export default function MeshGlobe() {
         if (fade < 0.015) continue;
 
         if (hot[i]) {
-          const pulse = 0.6 + Math.sin(time * 1.5 + i) * 0.4;
+          const pulse = 0.78 + Math.sin(time * 0.9 + i) * 0.22;
           ctx!.beginPath();
-          ctx!.arc(sx[i], sy[i], 1.1 + fade * 1.5, 0, 6.283);
-          ctx!.fillStyle = `rgba(255,132,44,${(0.25 + fade * 0.7) * pulse})`;
+          ctx!.arc(sx[i], sy[i], 0.5 + fade * 0.75, 0, 6.283);
+          ctx!.fillStyle = `rgba(255,108,16,${(0.16 + fade * 0.5) * pulse})`;
           ctx!.fill();
         } else {
           ctx!.beginPath();
-          ctx!.arc(sx[i], sy[i], 0.45 + fade * 0.85, 0, 6.283);
-          ctx!.fillStyle = `rgba(240,242,248,${(0.06 + fade * 0.5).toFixed(3)})`;
+          ctx!.arc(sx[i], sy[i], 0.32 + fade * 0.58, 0, 6.283);
+          ctx!.fillStyle = `rgba(236,239,246,${(0.04 + fade * 0.34).toFixed(3)})`;
           ctx!.fill();
         }
       }

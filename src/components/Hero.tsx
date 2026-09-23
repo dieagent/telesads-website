@@ -33,7 +33,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "linear-gradient(100deg, #080808 22%, rgba(8,8,8,0.92) 42%, rgba(8,8,8,0.55) 60%, rgba(8,8,8,0.15) 78%)",
+            "linear-gradient(100deg, #080808 18%, rgba(8,8,8,0.88) 38%, rgba(8,8,8,0.42) 58%, rgba(8,8,8,0.06) 76%)",
         }}
       />
 
