@@ -115,7 +115,6 @@ export default function Hero() {
         style={t(520)}
       >
         <div className="mx-auto h-px w-full max-w-[560px] bg-line" aria-hidden="true" />
-        <p className="label mt-5 text-center text-dim">Drag the globe to spin it</p>
       </div>
     </section>
   );
