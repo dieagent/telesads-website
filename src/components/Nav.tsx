@@ -51,14 +51,23 @@ export default function Nav() {
     >
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-[68px] max-w-[1400px] items-center justify-between px-6 lg:px-10"
+        className="mx-auto flex h-[74px] max-w-[1400px] items-center justify-between px-6 lg:px-10"
       >
-        <Link href="/" className="flex items-baseline gap-2" translate="no">
-          <span className="text-[15px] font-medium tracking-[0.24em]">TELES</span>
-          <span className="text-[15px] font-medium tracking-[0.24em] text-accent">ADS</span>
+        <Link href="/" className="flex items-center gap-2.5" translate="no">
+          <span
+            className="grid size-[26px] shrink-0 place-items-center rounded-[7px]"
+            style={{ background: "var(--accent)" }}
+            aria-hidden="true"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M4 12.3 19.5 5l-5.4 14.6-2.9-5.5-2.3 3.5v-4.8L4 12.3Z" fill="#080808" />
+            </svg>
+          </span>
+          <span className="text-[15px] font-semibold tracking-[0.12em]">TELES ADS</span>
+          <span className="size-1 rounded-full bg-accent" aria-hidden="true" />
         </Link>
 
-        <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">
+        <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-7 lg:flex">
           {routes.map(([h, l]) => {
             const active = path === h;
             return (
@@ -66,7 +75,7 @@ export default function Nav() {
                 <Link
                   href={h}
                   aria-current={active ? "page" : undefined}
-                  className="relative text-[13px] transition-colors duration-200"
+                  className="relative font-mono text-[11.5px] uppercase tracking-[0.14em] transition-colors duration-200"
                   style={{ color: active ? "var(--ink)" : "var(--muted)" }}
                 >
                   {l}
@@ -93,10 +102,11 @@ export default function Nav() {
           </a>
           <Link
             href="/contact"
-            className="hidden rounded-full bg-paper px-5 py-2 text-[13px] font-medium text-bg transition-transform duration-150 active:scale-[0.97] sm:inline-block"
+            className="group hidden items-center gap-2 rounded-full bg-paper px-5 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] text-bg transition-transform duration-150 active:scale-[0.97] sm:inline-flex"
             style={{ transitionTimingFunction: "var(--ease-out)" }}
           >
             Start a Campaign
+            <span className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true">↗</span>
           </Link>
           <button
             type="button"
