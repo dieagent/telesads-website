@@ -1,28 +1,28 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import createGlobe, { COBEOptions, Marker } from "cobe";
-import { useCallback, useEffect, useRef } from "react";
+import { useMotionValue, useSpring } from "motion/react";
 
 /**
- * COBE globe, adapted for the TELES ADS dark theme.
+ * COBE globe (hero), adapted for the TELES ADS dark theme.
  *
- * Differences from the reference implementation:
- * - dark: 1 and a near-black baseColor, so the sphere reads as a dark object
- *   lit from within rather than a white ball on a white page.
- * - markerColor is the TELES accent (#ff5c00); glowColor is dimmed hard so the
- *   globe stays background texture and never competes with the headline.
- * - phi/width live in refs, not render-scoped `let`s (the original resets them
- *   on every re-render, which snaps rotation back mid-drag).
- * - Spring-damped drag with momentum instead of an absolute delta.
- * - Honors prefers-reduced-motion: renders static, no auto-rotation.
+ * Rotation is driven by a spring (per Magic UI's implementation) rather than
+ * exponential easing — a spring settles with a slight overshoot, which is what
+ * makes the drag feel physical instead of soft and laggy.
+ *
+ * Kept on cobe v2 deliberately: the Reach section needs `arcs` and
+ * `markerElevation`, which v0.6.4 does not support.
  */
 
 /** cobe accepts onRender at runtime but omits it from its published types. */
 type GlobeState = { phi: number; width: number; height: number };
 type RenderOpts = COBEOptions & { onRender?: (state: GlobeState) => void };
 
-/** Config minus the size/render fields we compute at mount. */
+/** Config minus the size fields we compute at mount. */
 type GlobeConfig = Omit<COBEOptions, "width" | "height">;
+
+const MOVEMENT_DAMPING = 1400;
 
 const MARKERS: Marker[] = [
   { location: [19.076, 72.8777], size: 0.1 },    // Mumbai
@@ -63,40 +63,30 @@ export function Globe({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const phiRef = useRef(0);
   const widthRef = useRef(0);
-  const rRef = useRef(0);          // current rotation offset
-  const targetR = useRef(0);       // drag target, eased toward
-  const pointerDownX = useRef<number | null>(null);
-  const movement = useRef(0);
-  const reduced = useRef(false);
+  const pointerInteracting = useRef<number | null>(null);
+  const pointerInteractionMovement = useRef(0);
+  const reducedRef = useRef(false);
+
+  const r = useMotionValue(0);
+  const rs = useSpring(r, { mass: 1, damping: 30, stiffness: 100 });
 
   const updatePointerInteraction = (value: number | null) => {
-    pointerDownX.current = value;
+    pointerInteracting.current = value;
     if (canvasRef.current) {
       canvasRef.current.style.cursor = value !== null ? "grabbing" : "grab";
     }
   };
 
   const updateMovement = (clientX: number) => {
-    if (pointerDownX.current !== null) {
-      const delta = clientX - pointerDownX.current;
-      movement.current = delta;
-      targetR.current = delta / 180;
+    if (pointerInteracting.current !== null) {
+      const delta = clientX - pointerInteracting.current;
+      pointerInteractionMovement.current = delta;
+      r.set(r.get() + delta / MOVEMENT_DAMPING);
     }
   };
 
-  const onRender = useCallback((state: GlobeState) => {
-    if (!reduced.current && pointerDownX.current === null) {
-      phiRef.current += 0.0034;
-    }
-    // ease the drag offset so releasing carries momentum instead of snapping
-    rRef.current += (targetR.current - rRef.current) * 0.08;
-    state.phi = phiRef.current + rRef.current;
-    state.width = widthRef.current * 2;
-    state.height = widthRef.current * 2;
-  }, []);
-
   useEffect(() => {
-    reduced.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    reducedRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const onResize = () => {
       if (canvasRef.current) widthRef.current = canvasRef.current.offsetWidth;
@@ -108,30 +98,38 @@ export function Globe({
       ...config,
       width: widthRef.current * 2,
       height: widthRef.current * 2,
-      onRender,
+      onRender: (state) => {
+        if (!pointerInteracting.current && !reducedRef.current) {
+          phiRef.current += 0.005;
+        }
+        state.phi = phiRef.current + rs.get();
+        state.width = widthRef.current * 2;
+        state.height = widthRef.current * 2;
+      },
     };
     const globe = createGlobe(canvasRef.current!, opts);
 
     const t = setTimeout(() => {
       if (canvasRef.current) canvasRef.current.style.opacity = "1";
-    });
+    }, 0);
 
     return () => {
       clearTimeout(t);
-      window.removeEventListener("resize", onResize);
       globe.destroy();
+      window.removeEventListener("resize", onResize);
     };
-  }, [config, onRender]);
+  }, [rs, config]);
 
   return (
-    <div className={`absolute inset-0 mx-auto aspect-[1/1] w-full ${className}`}>
+    <div className={`absolute inset-0 mx-auto aspect-square w-full ${className}`}>
       <canvas
         aria-hidden="true"
         className="size-full cursor-grab opacity-0 transition-opacity duration-700 [contain:layout_paint_size] touch-none"
         ref={canvasRef}
-        onPointerDown={(e) =>
-          updatePointerInteraction(e.clientX - movement.current)
-        }
+        onPointerDown={(e) => {
+          pointerInteractionMovement.current = 0;
+          updatePointerInteraction(e.clientX);
+        }}
         onPointerUp={() => updatePointerInteraction(null)}
         onPointerOut={() => updatePointerInteraction(null)}
         onMouseMove={(e) => updateMovement(e.clientX)}

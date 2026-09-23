@@ -66,7 +66,7 @@ export function Globe({
   markerElevation = 0.012,
   arcWidth = 0.45,
   arcHeight = 0.35,
-  speed = 0.0032,
+  speed = 0.005,
   theta = 0.24,
   diffuse = 1.1,
   mapSamples = 16000,
@@ -93,15 +93,15 @@ export function Globe({
     if (!pointerInteracting.current) return;
     const deltaX = e.clientX - pointerInteracting.current.x;
     const deltaY = e.clientY - pointerInteracting.current.y;
-    dragOffset.current = { phi: deltaX / 300, theta: deltaY / 1000 };
+    dragOffset.current = { phi: deltaX / 1400, theta: deltaY / 2600 };
 
     const now = Date.now();
     if (lastPointer.current) {
       const dt = Math.max(now - lastPointer.current.t, 1);
-      const max = 0.15;
+      const max = 0.035;
       velocity.current = {
-        phi: Math.max(-max, Math.min(max, ((e.clientX - lastPointer.current.x) / dt) * 0.3)),
-        theta: Math.max(-max, Math.min(max, ((e.clientY - lastPointer.current.y) / dt) * 0.08)),
+        phi: Math.max(-max, Math.min(max, ((e.clientX - lastPointer.current.x) / dt) * 0.07)),
+        theta: Math.max(-max, Math.min(max, ((e.clientY - lastPointer.current.y) / dt) * 0.02)),
       };
     }
     lastPointer.current = { x: e.clientX, y: e.clientY, t: now };
@@ -205,8 +205,8 @@ export function Globe({
           ) {
             phiOffsetRef.current += velocity.current.phi;
             thetaOffsetRef.current += velocity.current.theta;
-            velocity.current.phi *= 0.95;
-            velocity.current.theta *= 0.95;
+            velocity.current.phi *= 0.96;
+            velocity.current.theta *= 0.96;
           }
 
           const thetaMin = -0.4;
