@@ -57,20 +57,20 @@ export function Globe({
   arcs = [],
   className = "",
   markerColor = [1, 0.36, 0],
-  baseColor = [0.13, 0.13, 0.14],
+  baseColor = [0.11, 0.11, 0.12],
   arcColor = [1, 0.36, 0],
-  glowColor = [0.16, 0.16, 0.17],
+  glowColor = [0.14, 0.14, 0.15],
   dark = 1,
-  mapBrightness = 5.5,
+  mapBrightness = 5.2,
   markerSize = 0.03,
   markerElevation = 0.012,
   arcWidth = 0.45,
   arcHeight = 0.35,
   speed = 0.005,
-  theta = 0.24,
+  theta = 0.28,
   diffuse = 1.1,
   mapSamples = 16000,
-  opacity = 0.92,
+  opacity = 1,
 }: GlobeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointerInteracting = useRef<{ x: number; y: number } | null>(null);
@@ -167,11 +167,10 @@ export function Globe({
       const width = canvas!.offsetWidth;
       if (width === 0 || globe) return;
 
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const opts: COBEOptions = {
-        devicePixelRatio: dpr,
-        width,
-        height: width,
+        devicePixelRatio: 2,
+        width: width * 2,
+        height: width * 2,
         phi: 0,
         theta,
         dark,
@@ -288,7 +287,6 @@ export function Globe({
           cursor: "grab",
           opacity: 0,
           transition: "opacity 1.2s ease",
-          borderRadius: "50%",
           touchAction: "none",
         }}
       />
