@@ -153,15 +153,18 @@ export function Globe({
     let io: IntersectionObserver | null = null;
     let timer: ReturnType<typeof setTimeout> | null = null;
 
-    const buildMarkers = () =>
-      markersRef.current.map((m) => ({
-        location: m.location,
-        size: markerSize,
-        id: m.id,
-      }));
-
-    const buildArcs = () =>
-      arcsRef.current.map((a) => ({ from: a.from, to: a.to, id: a.id }));
+    // Built once: rebuilding these per frame made cobe re-upload the marker
+    // and arc buffers 60x/sec, which is what made the motion stutter.
+    const builtMarkers = markersRef.current.map((m) => ({
+      location: m.location,
+      size: markerSize,
+      id: m.id,
+    }));
+    const builtArcs = arcsRef.current.map((a) => ({
+      from: a.from,
+      to: a.to,
+      id: a.id,
+    }));
 
     function init() {
       const width = canvas!.offsetWidth;
@@ -181,8 +184,8 @@ export function Globe({
         markerColor,
         glowColor,
         markerElevation,
-        markers: buildMarkers(),
-        arcs: buildArcs(),
+        markers: builtMarkers,
+        arcs: builtArcs,
         arcColor,
         arcWidth,
         arcHeight,
@@ -190,38 +193,48 @@ export function Globe({
       };
       globe = createGlobe(canvas!, opts);
 
+      let lastT = performance.now();
+
       function animate() {
+        const now = performance.now();
+        // Normalise to a 60fps step so rotation and momentum decay run at the
+        // same rate on 60Hz, 120Hz and 144Hz displays.
+        const k = Math.min(3, (now - lastT) / 16.667);
+        lastT = now;
+
         if (!inViewRef.current) {
           animationId = requestAnimationFrame(animate);
           return;
         }
         if (!isPausedRef.current) {
-          if (!reducedRef.current) phi += speed;
+          if (!reducedRef.current) phi += speed * k;
 
           if (
             Math.abs(velocity.current.phi) > 0.0001 ||
             Math.abs(velocity.current.theta) > 0.0001
           ) {
-            phiOffsetRef.current += velocity.current.phi;
-            thetaOffsetRef.current += velocity.current.theta;
-            velocity.current.phi *= 0.96;
-            velocity.current.theta *= 0.96;
+            phiOffsetRef.current += velocity.current.phi * k;
+            thetaOffsetRef.current += velocity.current.theta * k;
+            const decay = Math.pow(0.96, k);
+            velocity.current.phi *= decay;
+            velocity.current.theta *= decay;
           }
 
           const thetaMin = -0.4;
           const thetaMax = 0.4;
+          const pull = 1 - Math.pow(0.9, k);
           if (thetaOffsetRef.current < thetaMin) {
-            thetaOffsetRef.current += (thetaMin - thetaOffsetRef.current) * 0.1;
+            thetaOffsetRef.current += (thetaMin - thetaOffsetRef.current) * pull;
           } else if (thetaOffsetRef.current > thetaMax) {
-            thetaOffsetRef.current += (thetaMax - thetaOffsetRef.current) * 0.1;
+            thetaOffsetRef.current += (thetaMax - thetaOffsetRef.current) * pull;
           }
         }
 
         globe!.update({
           phi: phi + phiOffsetRef.current + dragOffset.current.phi,
           theta: theta + thetaOffsetRef.current + dragOffset.current.theta,
-          markers: buildMarkers(),
-          arcs: buildArcs(),
+          markers: builtMarkers,
+          arcs: builtArcs,
         });
         animationId = requestAnimationFrame(animate);
       }
