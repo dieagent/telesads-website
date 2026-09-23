@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Globe } from "./ui/globe";
+import { Globe } from "./ui/cobe-globe";
+import { REACH_MARKERS, REACH_ARCS } from "@/lib/globe-data";
 import { links } from "@/lib/content";
 
 export default function Hero() {
@@ -21,14 +22,14 @@ export default function Hero() {
     >
       {/* ── globe: centered, low, mostly below the fold line ── */}
       <div
-        className="pointer-events-none absolute left-1/2 top-[52%] w-[min(1500px,168vw)] -translate-x-1/2 md:w-[min(1180px,118vw)] lg:w-[min(1020px,82vw)]"
+        className="pointer-events-none absolute left-1/2 top-[58%] w-[min(1500px,168vw)] -translate-x-1/2 md:w-[min(1180px,118vw)] lg:w-[min(1020px,82vw)]"
         style={{
           opacity: on ? 1 : 0,
           transition: "opacity 1600ms var(--ease-out) 250ms",
         }}
       >
-        <div className="pointer-events-auto relative aspect-square">
-          <Globe className="max-w-none" />
+        <div className="pointer-events-auto relative">
+          <Globe markers={REACH_MARKERS} arcs={REACH_ARCS} />
         </div>
       </div>
 
@@ -38,7 +39,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(125% 95% at 50% 62%, rgba(8,8,8,0) 52%, rgba(8,8,8,0.35) 74%, rgba(8,8,8,0.92) 94%)",
+            "radial-gradient(120% 90% at 50% 62%, rgba(8,8,8,0) 42%, rgba(8,8,8,0.5) 66%, #080808 90%)",
         }}
       />
       {/* top fade: keeps the headline clear of the sphere */}
@@ -47,7 +48,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-x-0 top-0 h-[58%]"
         style={{
           background:
-            "linear-gradient(180deg, #080808 20%, rgba(8,8,8,0.72) 52%, rgba(8,8,8,0) 92%)",
+            "linear-gradient(180deg, #080808 24%, rgba(8,8,8,0.8) 56%, rgba(8,8,8,0) 100%)",
         }}
       />
 
