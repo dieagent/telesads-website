@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Globe from "./Globe";
+import { Globe, type GlobeMarker, type GlobeArc } from "./ui/cobe-globe";
 import { Reveal } from "./Reveal";
 import { TiltCard, Parallax, SplitText, PinnedTrack } from "./Depth";
 import { Stat } from "./Visuals";
@@ -9,12 +9,42 @@ import { services, audiences } from "@/lib/content";
 
 /* ==================================================== GLOBAL REACH (3D) */
 
+/* Module-level so the references stay stable across renders and the
+   globe's WebGL context is never torn down and rebuilt. */
+const REACH_MARKERS: GlobeMarker[] = [
+  { id: "mumbai", location: [19.076, 72.8777], label: "Mumbai" },
+  { id: "surat", location: [21.1702, 72.8311], label: "Surat" },
+  { id: "delhi", location: [28.6139, 77.209], label: "Delhi" },
+  { id: "dubai", location: [25.2048, 55.2708], label: "Dubai" },
+  { id: "abudhabi", location: [24.4539, 54.3773], label: "Abu Dhabi" },
+  { id: "london", location: [51.5074, -0.1278], label: "London" },
+  { id: "newyork", location: [40.7128, -74.006], label: "New York" },
+  { id: "singapore", location: [1.3521, 103.8198], label: "Singapore" },
+  { id: "istanbul", location: [41.0082, 28.9784], label: "Istanbul" },
+  { id: "kyiv", location: [50.4501, 30.5234], label: "Kyiv" },
+  { id: "saopaulo", location: [-23.5505, -46.6333], label: "S\u00e3o Paulo" },
+  { id: "lagos", location: [6.5244, 3.3792], label: "Lagos" },
+];
+
+const REACH_ARCS: GlobeArc[] = [
+  {
+    id: "mumbai-dubai",
+    from: [19.076, 72.8777],
+    to: [25.2048, 55.2708],
+    label: "India \u2192 UAE",
+  },
+  { id: "dubai-london", from: [25.2048, 55.2708], to: [51.5074, -0.1278] },
+  { id: "dubai-singapore", from: [25.2048, 55.2708], to: [1.3521, 103.8198] },
+  { id: "london-newyork", from: [51.5074, -0.1278], to: [40.7128, -74.006] },
+  { id: "mumbai-istanbul", from: [19.076, 72.8777], to: [41.0082, 28.9784] },
+];
+
 export function Reach() {
   return (
     <section className="relative overflow-hidden px-6 py-28 lg:px-10 lg:py-36">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-1/2 size-[680px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.11] blur-[150px]"
+        className="pointer-events-none absolute left-1/2 top-1/2 size-[680px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.09] blur-[160px]"
         style={{ background: "var(--accent)" }}
       />
       <div className="relative mx-auto max-w-[1400px]">
@@ -35,12 +65,12 @@ export function Reach() {
             <Reveal delay={120}>
               <p className="mt-7 max-w-[42ch] text-[15px] leading-[1.65] text-muted">
                 India and UAE representation, international client focus. Telegram is a borderless
-                network — campaigns are planned around where your audience actually is, not where
-                the agency happens to sit.
+                network &mdash; campaigns are planned around where your audience actually is, not
+                where the agency happens to sit.
               </p>
               <p className="label mt-8 flex items-center gap-2">
                 <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />
-                Drag the globe to spin it
+                Drag to spin &nbsp;&middot;&nbsp; markers label on approach
               </p>
             </Reveal>
 
@@ -51,8 +81,8 @@ export function Reach() {
             </div>
           </div>
 
-          <div className="relative aspect-square w-full cursor-grab active:cursor-grabbing">
-            <Globe />
+          <div className="relative w-full">
+            <Globe markers={REACH_MARKERS} arcs={REACH_ARCS} />
           </div>
         </div>
       </div>
