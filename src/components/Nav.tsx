@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { LogoMark } from "./Logo";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { links } from "@/lib/content";
@@ -54,15 +55,7 @@ export default function Nav() {
         className="mx-auto flex h-[74px] max-w-[1400px] items-center justify-between px-6 lg:px-10"
       >
         <Link href="/" className="flex items-center gap-2.5" translate="no">
-          <span
-            className="grid size-[26px] shrink-0 place-items-center rounded-[7px]"
-            style={{ background: "var(--accent)" }}
-            aria-hidden="true"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <path d="M4 12.3 19.5 5l-5.4 14.6-2.9-5.5-2.3 3.5v-4.8L4 12.3Z" fill="#080808" />
-            </svg>
-          </span>
+          <LogoMark size={28} className="shrink-0 text-ink" />
           <span className="text-[15px] font-semibold tracking-[0.12em]">TELES ADS</span>
           <span className="size-1 rounded-full bg-accent" aria-hidden="true" />
         </Link>
