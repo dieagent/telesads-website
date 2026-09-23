@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { LogoLockup } from "./Logo";
 import { brand, links } from "@/lib/content";
 
 export default function Footer() {
@@ -76,12 +75,13 @@ export default function Footer() {
         </div>
 
         {/* oversized wordmark */}
-        <div className="mt-24 flex justify-center overflow-hidden">
-          <LogoLockup
-            width={520}
-            className="w-full max-w-[520px] select-none"
-            style={{ color: "rgba(245,245,243,0.07)" }}
-          />
+        <div className="mt-24 overflow-hidden" aria-hidden="true">
+          <p
+            className="display select-none whitespace-nowrap text-[clamp(4rem,19vw,17rem)] leading-[0.8]"
+            style={{ color: "rgba(245,245,243,0.055)" }}
+          >
+            TELES ADS
+          </p>
         </div>
 
         <div className="rule mt-10 pt-7">
