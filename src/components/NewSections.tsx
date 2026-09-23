@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Globe } from "./ui/globe";
+import { Globe } from "./ui/cobe-globe";
+import { REACH_MARKERS, REACH_ARCS } from "@/lib/globe-data";
 import { Reveal } from "./Reveal";
 import { TiltCard, Parallax, SplitText, PinnedTrack } from "./Depth";
 import { Stat } from "./Visuals";
@@ -40,7 +41,7 @@ export function Reach() {
               </p>
               <p className="label mt-8 flex items-center gap-2">
                 <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />
-                Drag the globe to spin it
+                Drag to spin &nbsp;&middot;&nbsp; markers label on approach
               </p>
             </Reveal>
 
@@ -51,8 +52,8 @@ export function Reach() {
             </div>
           </div>
 
-          <div className="relative aspect-square w-full">
-            <Globe className="max-w-none" />
+          <div className="relative w-full">
+            <Globe markers={REACH_MARKERS} arcs={REACH_ARCS} />
           </div>
         </div>
       </div>
