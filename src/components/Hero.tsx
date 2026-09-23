@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Globe } from "./ui/globe";
+import { DotGlobe } from "./ui/dot-globe";
+import { HERO_CITIES, HERO_ROUTES } from "@/lib/globe-data";
 import { links } from "@/lib/content";
 
 export default function Hero() {
@@ -28,7 +29,7 @@ export default function Hero() {
         }}
       >
         <div className="pointer-events-auto relative aspect-square">
-          <Globe className="max-w-none" />
+          <DotGlobe cities={HERO_CITIES} routes={HERO_ROUTES} />
         </div>
       </div>
 
@@ -38,7 +39,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(125% 95% at 50% 62%, rgba(8,8,8,0) 52%, rgba(8,8,8,0.35) 74%, rgba(8,8,8,0.92) 94%)",
+            "radial-gradient(130% 100% at 50% 60%, rgba(8,8,8,0) 58%, rgba(8,8,8,0.28) 80%, rgba(8,8,8,0.85) 97%)",
         }}
       />
       {/* top fade: keeps the headline clear of the sphere */}
@@ -47,7 +48,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-x-0 top-0 h-[58%]"
         style={{
           background:
-            "linear-gradient(180deg, #080808 20%, rgba(8,8,8,0.72) 52%, rgba(8,8,8,0) 92%)",
+            "linear-gradient(180deg, #080808 18%, rgba(8,8,8,0.6) 48%, rgba(8,8,8,0) 88%)",
         }}
       />
 
