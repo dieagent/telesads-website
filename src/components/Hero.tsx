@@ -28,7 +28,7 @@ export default function Hero() {
         }}
       >
         <div className="pointer-events-auto relative aspect-square">
-          <Globe />
+          <Globe className="max-w-none" />
         </div>
       </div>
 
@@ -38,7 +38,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(120% 90% at 50% 62%, rgba(8,8,8,0) 38%, rgba(8,8,8,0.55) 62%, #080808 88%)",
+            "radial-gradient(125% 95% at 50% 62%, rgba(8,8,8,0) 52%, rgba(8,8,8,0.35) 74%, rgba(8,8,8,0.92) 94%)",
         }}
       />
       {/* top fade: keeps the headline clear of the sphere */}
@@ -47,7 +47,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-x-0 top-0 h-[58%]"
         style={{
           background:
-            "linear-gradient(180deg, #080808 26%, rgba(8,8,8,0.82) 58%, rgba(8,8,8,0) 100%)",
+            "linear-gradient(180deg, #080808 20%, rgba(8,8,8,0.72) 52%, rgba(8,8,8,0) 92%)",
         }}
       />
 
