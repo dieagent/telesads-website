@@ -4,6 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { brand } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/about" },
   title: "About",
   description: brand.description,
 };

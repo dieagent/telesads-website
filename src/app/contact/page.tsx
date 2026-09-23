@@ -3,6 +3,7 @@ import Brief from "@/components/Brief";
 import { PageHead } from "@/components/Page";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/contact" },
   title: "Contact",
   description:
     "Send a campaign brief to TELES ADS. Share your niche, destination link, target countries, objective and budget.",

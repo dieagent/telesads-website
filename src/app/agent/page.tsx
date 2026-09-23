@@ -5,6 +5,7 @@ import { TiltCard } from "@/components/Depth";
 import { agentCapabilities, links } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/agent" },
   title: "TELES Agent",
   description:
     "An AI-powered assistant and automation layer for advertising workflows, campaign assistance, Telegram growth and marketing operations.",

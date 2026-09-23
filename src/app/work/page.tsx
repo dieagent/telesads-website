@@ -5,6 +5,7 @@ import { Parallax } from "@/components/Depth";
 import { portfolio, reportingMetrics, process, brand } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/work" },
   title: "Work",
   description:
     "Verified Telegram bot and automation project references, our eight-stage method, and the metrics we report.",

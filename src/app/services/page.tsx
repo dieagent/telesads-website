@@ -4,6 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { services } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/services" },
   title: "Services",
   description:
     "Telegram advertising, Meta & Instagram ads, Google Ads, creative production, growth consulting, bot development and automation.",

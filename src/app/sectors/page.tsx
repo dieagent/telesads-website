@@ -4,6 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { audiences, briefQuestions } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/sectors" },
   title: "Sectors",
   description:
     "Forex, crypto and Web3, binary, gambling, arbitrage, meme coin, SaaS, creators and e-commerce — where lawful and compliant.",

@@ -47,6 +47,7 @@ export const metadata: Metadata = {
     title: "TELES ADS — Your Gateway to Telegram Growth",
     description: brand.shortBio,
   },
+  alternates: { canonical: "/" },
   robots: { index: true, follow: true },
 };
 
