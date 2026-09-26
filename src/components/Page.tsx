@@ -9,12 +9,15 @@ export function PageHead({
   title,
   lede,
   meta,
+  /** Sentence-length H1s need a smaller scale than one-word page titles. */
+  size = "display",
 }: {
   index: string;
   kicker: string;
   title: ReactNode;
   lede?: string;
   meta?: [string, string][];
+  size?: "display" | "compact";
 }) {
   return (
     <header className="page-in relative overflow-hidden px-6 pb-16 pt-36 lg:px-10 lg:pb-24 lg:pt-44">
@@ -34,12 +37,20 @@ export function PageHead({
       />
       <div className="relative mx-auto max-w-[1400px]">
         <p className="label flex items-center gap-3">
-          <span className="text-accent">{index}</span>
+          {index && <span className="text-accent">{index}</span>}
           <span className="inline-block h-px w-8 bg-line" aria-hidden="true" />
           {kicker}
         </p>
 
-        <h1 className="page-title mt-8 text-[clamp(3rem,11vw,10rem)]">{title}</h1>
+        <h1
+          className={
+            size === "compact"
+              ? "page-title mt-8 max-w-[19ch] text-[clamp(2.4rem,6vw,5rem)]"
+              : "page-title mt-8 text-[clamp(3rem,11vw,10rem)]"
+          }
+        >
+          {title}
+        </h1>
 
         {(lede || meta) && (
           <div className="mt-12 grid gap-10 border-t border-line pt-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">

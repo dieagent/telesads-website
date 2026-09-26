@@ -7,11 +7,11 @@ import { useEffect, useState } from "react";
 import { links } from "@/lib/content";
 
 export const routes = [
+  ["/telegram-advertising", "Telegram Ads"],
+  ["/trading-ads", "Trading Ads"],
   ["/services", "Services"],
-  ["/sectors", "Sectors"],
   ["/agent", "TELES Agent"],
-  ["/work", "Work"],
-  ["/about", "About"],
+  ["/blog", "Insights"],
 ] as const;
 
 export default function Nav() {

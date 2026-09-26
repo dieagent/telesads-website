@@ -22,6 +22,29 @@ export default function Footer() {
             <p className="label mt-6">{brand.regions}</p>
           </div>
 
+          <nav aria-label="Advertising services">
+            <h2 className="label">Advertising</h2>
+            <ul className="mt-5 space-y-2.5 text-[14px]">
+              {[
+                ["/telegram-advertising", "Telegram Advertising"],
+                ["/telegram-channel-promotion", "Channel Promotion"],
+                ["/trading-ads", "Trading Ads"],
+                ["/forex-ads", "Forex Ads"],
+                ["/crypto-ads", "Crypto Ads"],
+                ["/binary-trading-ads", "Binary Trading Ads"],
+                ["/quotex-ads", "Quotex Ads"],
+                ["/pocket-option-ads", "Pocket Option Ads"],
+                ["/telegram-bot-development", "Bot Development"],
+              ].map(([h, l]) => (
+                <li key={h}>
+                  <Link href={h} className="text-muted transition-colors duration-200 hover:text-ink">
+                    {l}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
           <nav aria-label="Sections">
             <h2 className="label">Index</h2>
             <ul className="mt-5 space-y-2.5 text-[14px]">
@@ -30,6 +53,9 @@ export default function Footer() {
                 ["/sectors", "Sectors"],
                 ["/agent", "TELES Agent"],
                 ["/work", "Work"],
+                ["/blog", "Insights"],
+                ["/telegram-ads-cost", "Pricing Guide"],
+                ["/how-to-advertise-on-telegram", "How-To Guide"],
                 ["/about", "About"],
                 ["/contact", "Contact"],
               ].map(([h, l]) => (

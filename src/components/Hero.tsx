@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { DotGlobe } from "./ui/dot-globe";
 import { HERO_CITIES, HERO_ROUTES } from "@/lib/globe-data";
 import { links } from "@/lib/content";
@@ -83,7 +84,7 @@ export default function Hero() {
             className="pointer-events-auto mt-11 flex flex-wrap items-center justify-center gap-5"
             style={t(400)}
           >
-            <a
+            <Link
               href="/contact"
               className="group inline-flex items-center gap-2.5 rounded-full bg-paper px-7 py-3.5 text-[13px] font-semibold uppercase tracking-[0.1em] text-bg transition-transform duration-150 active:scale-[0.97]"
               style={{ transitionTimingFunction: "var(--ease-out)" }}
@@ -95,7 +96,7 @@ export default function Hero() {
               >
                 ↗
               </span>
-            </a>
+            </Link>
             <a
               href="#services"
               className="label flex items-center gap-2 transition-colors duration-200 hover:text-ink"
