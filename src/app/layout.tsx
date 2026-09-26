@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { ScrollProgress } from "@/components/Visuals";
 import { ChatLauncher } from "@/components/AgentChat";
 import Cursor from "@/components/Cursor";
+import { Analytics } from "@vercel/analytics/next";
 
 const sans = Inter({ variable: "--font-sans", subsets: ["latin"], display: "swap" });
 const mono = JetBrains_Mono({ variable: "--font-mono", subsets: ["latin"], display: "swap" });
@@ -160,6 +161,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main id="main" className="page-in">{children}</main>
         <Footer />
         <ChatLauncher />
+        <Analytics />
       </body>
     </html>
   );
